@@ -1,3 +1,9 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin:0;
+}
+
 .nav{
     border-top: 3px solid rgba(244, 130, 37, 1);
     padding-top: 5px;
@@ -12,11 +18,18 @@
 #hamburger{
     color: rgb(131, 140, 149);
     font-weight: 700;
+    visibility: hidden;
+}
+
+.nav-logo-container{
+    padding: 5px;
+    border-radius: 25px;
 }
 
 .nav-logo{
     width: 150px;
     height: 30px;
+    
 }
 
 .nav-list{
@@ -24,13 +37,20 @@
     list-style: none;
     align-items: center;
     justify-content: space-evenly;
-    gap: 30px;
+    
 }
 
-.nav-list-item a{
+.nav-list-item{
+    width: 81px;
+}
+
+.nav-list-link{
     text-decoration: none;
     font-size: .8rem;
     color: rgb(109, 109, 109);
+    padding: 10px;
+    width: 20px;
+    border-radius: 25px;
 }
 
 .nav-form-container{
@@ -86,4 +106,16 @@
 .nav-action-signup{
     color: rgb(249,252,255);
     background-color: rgb(10,149,255);
+}
+
+.nav-hover:hover{
+    background-color: rgb(218, 211, 211);
+}
+
+.nav-action-login:hover{
+    background-color: rgb(131, 162, 184)
+}
+
+.nav-action-signup:hover{
+    background-color: rgb(0, 109, 192);
 }
