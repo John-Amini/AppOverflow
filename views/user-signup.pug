@@ -5,7 +5,7 @@ include utils.pug
 block content 
     #signup-container
         .signup-info
-            h2 Join the App Overflow community
+            h1.signup-info-header Join the App Overflow community
             .signup-info-subsections
                 i(class="far fa-question-circle")
                 p.signup-info-text Get unstuck - ask a question
@@ -20,22 +20,32 @@ block content
                 p.signup-info-text Earn reputation and badges
         .signup-form-container
             .signup-form-box
-                if err
-                    +validationErrorSummary(err)
-                form(action="/users/signup", method="post" class='sign-up-form')
+                
+                form(action="/users/signup", method="post" class='signup-form')
                     input(type="hidden", name="_csrf" value=csrfToken) 
-                    .signup-form-input
+                    .login-form-inputs
                         label(for="username") Display Name 
-                        input(type="text", name="username" class="signup-form-control")
-                    .signup-form-input
+                        input(type="text", name="username" class="login-text-field")
+                    .login-form-inputs
                         label(for="email") Email 
-                        input(type="email", name="email" class="signup-form-control")
-                    .signup-form-input
+                        input(type="email", name="email" class="login-text-field")
+                    .login-form-inputs
                         label(for="password") Password
-                        input(type="password", name="password" class="signup-form-control")
-                    .signup-form-input
+                        input(type="password", name="password" class="login-text-field")
+                        p.signup-password Should contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")
+                    .signup-form-inputs-checkbox#robot
                         input(type="checkbox", name="robot") 
                         label(for="robot") I'm not a robot
-                    .signup-form-input
-                    input(type="submit", value="Sign Up")
+                    .signup-form-inputs-checkbox
+                        input(type="checkbox", name="promo") 
+                        label(for="promo" class="promo") Opt-in to receive occasional product updates, user research invitations, company announcements, and digests.
+                    
+                    .login-form-inputs
+                        input(type="submit", value="Sign Up" class="login-button signup-button")
+                        p.signup-warning By clicking “Sign up”, you agree to our terms of service, privacy policy and cookie policy
+        if err
+            .signup-error-container
+                //- .signup-error-box
+                .errors-container#signup-error-box
+                    +validationErrorSummary(err)
 
