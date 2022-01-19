@@ -1,0 +1,7 @@
+form(action="/questions" method="post")
+        input(type="hidden" name="_csrf" value=csrfToken)
+        label(for="title") Title
+        input(type="text" name="title")
+        label(for="content") Details
+        input(type="textarea" name="content")
+        button Post Question
