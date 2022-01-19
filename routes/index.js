@@ -11,7 +11,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
   //displays list of questions
   let listOfQuestions = await Question.findAll({
     raw:true,
-    order:[['createdAt','DESC']]
+    order:[['updatedAt','DESC']]
   }
   );
   // console.log(listOfQuestions);

@@ -1,5 +1,6 @@
 'use strict';
-
+const faker = require("faker");
+const bcrypt = require("bcryptjs")
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -13,7 +14,18 @@ module.exports = {
       }], {});
     */
    return queryInterface.bulkInsert('Users',[
-     {username:'testinguser1',email:'testinguser1@gmail.com',hashed_password:'password',createdAt: new Date(),updatedAt:new Date()}
+     {username:'testinguser1',email:'testinguser1@gmail.com',hashed_password:'password',createdAt: new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+     {username:faker.internet.userName(),email:faker.internet.email(),hashed_password: bcrypt.hashSync(faker.internet.password(), 10), createdAt:new Date(),updatedAt:new Date()},
+
     ],{})
   },
 
