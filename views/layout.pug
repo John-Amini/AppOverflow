@@ -1,8 +1,31 @@
 doctype html
 html
   head
+      link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous")
       block head
-        title="Express Starter App"
+        title="App Overflow"
         link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel="stylesheet", href="/stylesheets/layout.css")
   body
+    nav.nav
+      .hambuger-container: i(class="fas fa-bars" id="hamburger")
+      .nav-logo-container 
+        img(src='/images/logo.svg.png' class="nav-logo")
+      ul.nav-list
+        li.nav-list-item: a(href="#") About
+        li.nav-list-item: a(href="#") Products
+        li.nav-list-item: a(href="#") For Teams
+      .nav-form-container
+        .nav-search-icon-container
+          .nav-search-box
+            i(class="fas fa-search" id="nav-search-icon")
+        form(action="#", method="post") 
+          input(type="hidden", name="_csrf" value="csrfToken")
+          input(class="form-input" type="text", name="search" placeholder='Search...')
+      .nav-action-btns
+        a(href="/users/login" class="nav-action-login")  Login
+        a(href="/users/signup" class="nav-action-signup")  Sign up
+
     block content
+
+    script(src="https://kit.fontawesome.com/80270590a0.js" crossorigin="anonymous")
