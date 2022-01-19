@@ -1,0 +1,12 @@
+mixin validationErrorSummary(errors)
+    if errors
+        div
+            p Error(s):
+            ul
+                each error in errors
+                 li= error
+
+mixin field(labelText, fieldName, fieldValue, fieldType= 'text')
+    div(class='login-form-inputs')
+        label(for=fieldName)= labelText
+        input(type='text' id=fieldName name=fieldName value=fieldValue class='login-text-field')
