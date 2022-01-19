@@ -18,4 +18,8 @@ router.get('/', asyncHandler(async (req, res, next) => {
   res.render('index', { title: 'AppOverflow',listOfQuestions });
 }));
 
+function goToQuestions(){
+  console.log("hit")
+}
+
 module.exports = router;

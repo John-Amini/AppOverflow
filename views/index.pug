@@ -8,12 +8,14 @@ append head
 
 block content
   h1= title
-  p Welcome to your Project Skeleton
-  each question in listOfQuestions
-        div(id=`question-container-${question.id}`).questionContainer
-            h2= question.title
-            p= question.content
-            a(href=`/questions/${question.id}`) Question Page
-            //if locals.user.id === question.user_id
-                form(action=`/questions/${question.id}/` method="delete")
-                    button(id=question.id).delete-btn Delete
+  div(id='questionButtonContainer')
+    a(href="/questions") Ask Question
+  div(id='questionList-Container')
+    each question in listOfQuestions
+          div(id=`question-container-${question.id}`).questionContainer
+              h2= question.title
+              p= question.content
+              a(href=`/questions/${question.id}`) Question Page
+              //if locals.user.id === question.user_id
+                  form(action=`/questions/${question.id}/` method="delete")
+                      button(id=question.id).delete-btn Delete
