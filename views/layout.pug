@@ -9,12 +9,12 @@ html
   body
     nav.nav
       .hambuger-container: i(class="fas fa-bars" id="hamburger")
-      .nav-logo-container 
-        img(src='/images/logo.svg.png' class="nav-logo")
+      .nav-logo-container.nav-hover
+        img(src='/images/logo.svg.png' class="nav-logo ")
       ul.nav-list
-        li.nav-list-item: a(href="#") About
-        li.nav-list-item: a(href="#") Products
-        li.nav-list-item: a(href="#") For Teams
+        li.nav-list-item: a(href="#" class="nav-hover nav-list-link") About
+        li.nav-list-item: a(href="#" class="nav-hover nav-list-link") Products
+        li.nav-list-item: a(href="#" class="nav-hover nav-list-link") For Teams
       .nav-form-container
         .nav-search-icon-container
           .nav-search-box
