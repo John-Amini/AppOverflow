@@ -6,6 +6,7 @@ html
         title="App Overflow"
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel="stylesheet", href="/stylesheets/layout.css")
+        link(rel="stylesheet", href="/stylesheets/questions.css")
   body
     nav.nav
       .hambuger-container: i(class="fas fa-bars" id="hamburger")
@@ -19,7 +20,7 @@ html
         .nav-search-icon-container
           .nav-search-box
             i(class="fas fa-search" id="nav-search-icon")
-        form(action="#", method="post") 
+        form(action="#", method="post")
           input(type="hidden", name="_csrf" value="csrfToken")
           input(class="form-input" type="text", name="search" placeholder='Search...')
       .nav-action-btns
