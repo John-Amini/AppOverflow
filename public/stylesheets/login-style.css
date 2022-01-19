@@ -1,6 +1,72 @@
 .form-card {
+    padding: 0 0 200px 0;
     height: auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.login-box {
+    box-shadow: 1px 1px 20px rgba(185, 185, 185, .6);
+    padding: 10px 20px;
+    border-radius: 7px;
+}
+
+.login-form-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-inputs > label {
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.login-text-field {
+    border-radius: 2px;
+    border: solid rgb(185, 185, 185);
+    border-width: thin;
+    width: 250px;
+    padding: 10px;
+    margin: 3px 0 10px 0;
+}
+
+.login-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-button {
+    background-color: #0a95ff;
+    border-radius: 2px;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px 0 5px 0;
+    width: 250px;
+}
+
+.login-button-container > a {
+    color: rgb(35, 137, 255);
+    text-decoration: none;
+}
+
+.signup-link{
+    margin-top: 25px;
+}
+
+.signup-link > p > a {
+    color: rgb(35, 137, 255);
+    text-decoration: none;
+}
+
+.errors-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 200px 0 50px 0;
+    color: red;
 }
