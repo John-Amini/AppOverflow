@@ -29,7 +29,8 @@ html
       .nav-action-btns
         a(href="/users/login" class="nav-action-login")  Login
         a(href="/users/signup" class="nav-action-signup")  Sign up
-
+    if locals.authenticated
+      p Loged In
     block content
 
     script(src="https://kit.fontawesome.com/80270590a0.js" crossorigin="anonymous")
