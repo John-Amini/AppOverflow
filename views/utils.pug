@@ -2,9 +2,9 @@ mixin validationErrorSummary(errors)
     if errors
         div
             p Error(s):
-            ul
+            ul.error-list
                 each error in errors
-                 li= error
+                 li.error-list-item= error
 
 mixin field(labelText, fieldName, fieldValue, fieldType= 'text')
     div(class='login-form-inputs')
