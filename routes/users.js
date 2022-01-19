@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler, userSignupValidators, loginValidators } = require('./utils');
-
+const { loginUser, logoutUser } = require('../auth')
 
 var router = express.Router();
 
@@ -28,16 +28,17 @@ router.post('/login', csrfProtection, loginValidators,
       emailAddress,
       password,
     } = req.body;
-    console.log(req.body)
+
     let errors = [];
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
-
+      console.log(emailAddress)
       const user = await db.User.findOne({ where: { email: emailAddress } });
+      console.log(user)
       if (user !== null) {
-        const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-
+        console.log(user.hashed_password)
+        const passwordMatch = await bcrypt.compare(password, user.hashed_password.toString());
         if (passwordMatch) {
           loginUser(req, res, user);
           return res.redirect('/');
@@ -77,6 +78,7 @@ router.post('/signup', userSignupValidators, csrfProtection, asyncHandler(async 
     const hashed = await bcrypt.hash(password, 10)
     user.hashed_password = hashed
     await user.save()
+    loginUser(req, res, user);
     res.redirect('/questions')
   }
   else {
@@ -85,5 +87,10 @@ router.post('/signup', userSignupValidators, csrfProtection, asyncHandler(async 
   }
 
 }))
+
+router.get('/logout', (req, res) => {
+  logoutUser(req, res);
+  res.redirect('/')
+})
 
 module.exports = router;
