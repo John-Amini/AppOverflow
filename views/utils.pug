@@ -6,7 +6,7 @@ mixin validationErrorSummary(errors)
                 each error in errors
                  li.error-list-item= error
 
-mixin field(labelText, fieldName, fieldValue, fieldType= 'text')
+mixin field(labelText, fieldName, fieldValue, fieldType)
     div(class='login-form-inputs')
         label(for=fieldName)= labelText
-        input(type='text' id=fieldName name=fieldName value=fieldValue class='login-text-field')
+        input(id=fieldName name=fieldName value=fieldValue type=fieldType class='login-text-field')
