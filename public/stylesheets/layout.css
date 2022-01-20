@@ -41,7 +41,8 @@
 }
 
 .nav-list-item{
-    width: 81px;
+    width: 101px;
+    text-align: center;
 }
 
 .nav-list-link{
