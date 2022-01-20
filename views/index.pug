@@ -16,5 +16,6 @@ block content
               h2= question.title
               p= question.content
               a(href=`/questions/${question.id}`) Question Page
-              if locals.user.id === question.user_id
-                    button(id=question.id).delete-btn Delete
+              if locals.user
+                if locals.user.id === question.user_id
+                      button(id=question.id).delete-btn Delete
