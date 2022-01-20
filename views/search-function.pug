@@ -1,0 +1,21 @@
+extends layout
+
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/index.css")
+  //- add page specific js
+  script(src="/javascripts/index.js" type="module" defer)
+
+block content
+  h1 Search Results
+  div(id='questionButtonContainer')
+    a(href="/questions") Ask Question
+  div(id='questionList-Container')
+    each question in listOfQuestions
+          div(id=`question-container-${question.id}`).questionContainer
+              h2= question.title
+              p= question.content
+              a(href=`/questions/${question.id}`) Question Page
+              if locals.user
+                if locals.user.id === question.user_id
+                      button(id=question.id).delete-btn Delete
