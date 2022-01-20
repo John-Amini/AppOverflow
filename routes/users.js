@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler, userSignupValidators, loginValidators } = require('./utils');
-const { loginUser, logoutUser } = require('../auth')
+const { loginUser, logoutUser, requireAuth } = require('../auth')
 
 var router = express.Router();
 
@@ -92,5 +92,18 @@ router.get('/logout', (req, res) => {
   logoutUser(req, res);
   res.redirect('/')
 })
+
+router.get('/:id', requireAuth, asyncHandler(async (req, res) => {
+  const user = await db.User.findOne({
+    where: { id: req.params.id },
+    include: db.Question
+  })
+  if (user) {
+    res.render('user-profile', { user })
+
+  } else {
+    res.redirect('/')
+  }
+}))
 
 module.exports = router;
