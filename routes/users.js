@@ -96,9 +96,12 @@ router.get('/logout', (req, res) => {
 router.get('/:id', requireAuth, asyncHandler(async (req, res) => {
   const user = await db.User.findOne({
     where: { id: req.params.id },
-    include: db.Question
+    include: {
+      model: db.Question
+    }
   })
   if (user) {
+    console.log(user)
     res.render('user-profile', { user })
 
   } else {
