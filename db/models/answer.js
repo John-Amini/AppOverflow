@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     Answer.hasMany(models.Comment, { foreignKey: 'answer_id' })
     Answer.belongsTo(models.User, { foreignKey: 'user_id' })
     Answer.hasMany(models.Vote, { foreignKey: 'answer_id' })
+    Answer.belongsTo(models.Question, { foreignKey: 'question_id' })
   };
   return Answer;
 };
