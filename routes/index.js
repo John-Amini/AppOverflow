@@ -22,4 +22,8 @@ function goToQuestions(){
   console.log("hit")
 }
 
+router.get('/search', asyncHandler(async(req, res, next) => {
+  
+}))
+
 module.exports = router;

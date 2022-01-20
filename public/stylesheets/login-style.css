@@ -1,6 +1,6 @@
 .form-card {
-    padding: 0 0 200px 0;
-    height: auto;
+    /* padding: auto;
+    height: auto; */
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -9,6 +9,7 @@ html
         link(rel="stylesheet", href="/stylesheets/questions.css")
         link(rel="stylesheet", href="/stylesheets/login-style.css")
         link(rel="stylesheet", href="/stylesheets/user-signup.css")
+        script(src="/javascripts/search-function.js" type="module" defer)
 
   body
     nav.nav
@@ -25,7 +26,7 @@ html
             i(class="fas fa-search" id="nav-search-icon")
         form(action="#", method="post")
           input(type="hidden", name="_csrf" value="csrfToken")
-          input(class="form-input" type="text", name="search" placeholder='Search...')
+          input(class="form-input" type="search", name="search" placeholder='Search...')
       .nav-action-btns
       if (!locals.authenticated)
         a(href="/users/login" class="nav-action-login")  Login
