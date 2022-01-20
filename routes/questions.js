@@ -4,7 +4,7 @@ var router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
 
 const { check, validationResult } = require('express-validator');
-
+const { requireAuth } = require('../auth');
 const db = require("../db/models");
 const {Question} = db;
 
@@ -17,29 +17,28 @@ const questionValidation = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide some content for your question.'),
 ];
-router.get('/',asyncHandler(function(req, res, next) {
+router.get('/',requireAuth,asyncHandler(function(req, res, next) {
   res.render('questionform',{body:{}});
 }));
 
-router.post('/',questionValidation,asyncHandler(async (req,res,next)=> {
+router.post('/', requireAuth ,questionValidation,asyncHandler(async (req,res,next)=> {
   const {title  , content} = req.body
   const body = req.body;
-  console.log(body);
+
   const validatorErrors = validationResult(req);
   req.errors = []
+
   if (!validatorErrors.isEmpty()) {
-    //errors need to rerender with error message
     req.errors = validatorErrors.array().map((error) => error.msg);
     if(req.errors[0] === "Invalid value") req.errors.shift();
     res.render("questionform",{body,errors:req.errors})
   }
   else{
-    //now try to post it but if title isnt unique they have to try again
 
-    //determine user id somehow based on authentication
     try{
-    const newQuestion = await Question.create({title,content,user_id:1});
+    const newQuestion = await Question.create({title,content,user_id:res.locals.user.id});
     res.redirect(`/questions/${newQuestion.id}`);
+
     }
     catch(err){
       req.errors.push("Please create a unique title");
@@ -54,7 +53,17 @@ router.get('/:id' , asyncHandler(async(req,res,next) =>{
 
 }))
 
-router.delete('/:id',asyncHandler(async(req,res,next) => {
+router.delete('/:id',requireAuth,asyncHandler(async(req,res,next) => {
+
+  const question = await Question.findByPk(req.params.id)
+  if(question && question.user_id === res.locals.user.id){
+    await question.destroy();
+  }
+  else{
+    res.errors.push("You cannot delete this");
+    res.render("/");
+  }
+
   res.send("Send a delete request")
 }))
 module.exports = router;
