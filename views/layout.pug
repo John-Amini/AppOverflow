@@ -27,10 +27,13 @@ html
           input(type="hidden", name="_csrf" value="csrfToken")
           input(class="form-input" type="text", name="search" placeholder='Search...')
       .nav-action-btns
+      if (!locals.authenticated)
         a(href="/users/login" class="nav-action-login")  Login
         a(href="/users/signup" class="nav-action-signup")  Sign up
-    if locals.authenticated
-      p Loged In
+      else
+        a(href='users/:id' class="fas fa-user-circle user-icon")
+          span(class='user-name-profile') #{user.username}
+        a(href="/users/logout" class="nav-action-logout") Log out
     block content
 
     script(src="https://kit.fontawesome.com/80270590a0.js" crossorigin="anonymous")
