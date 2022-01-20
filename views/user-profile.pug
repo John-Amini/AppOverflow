@@ -17,23 +17,28 @@ block content
 
 
         .profile-posts-container
-            .profile-questions
-                .profile-subsection-header-box
-                    i(class="fas fa-question" id="profile-header-icon")
-                    h2.profile-subsection-header Asked Questions
-                ul.profile-subsection-list.right-border
-                    each question in userFound.Questions
-                        li.profile-subsection-list-item
-                            p.profile-subsection-list-answers Answers: #{question.Answers.length}
-                            p.profile-subsection-list-title: a(href=`/questions/${question.id}`) #{question.title}
-                            p.profile-subsection-list-date #{question.createdAt.toDateString()}
-            .profile-answers
-                .profile-subsection-header-box
-                    i(class="fas fa-graduation-cap" id="profile-header-icon")
-                    h2.profile-subsection-header Answered Questions
-                ul.profile-subsection-list.right-border
-                    each answer in userFound.Answers
-                        li.profile-subsection-list-item
-                            p.profile-subsection-list-answers Votes: #{answer.Votes.length}
-                            p.profile-subsection-list-title: a(href=`/answers/${answer.id}`) #{answer.title}
-                            p.profile-subsection-list-date #{answer.createdAt.toDateString()}
+            .profile-posts-top
+                .profile-questions
+                    .profile-subsection-header-box
+                        i(class="fas fa-question" id="profile-header-icon")
+                        h2.profile-subsection-header Asked Questions
+                    ul.profile-subsection-list
+                        each question in userFound.Questions
+                            li.profile-subsection-list-item
+                                p.profile-subsection-list-answers Answers: #{question.Answers.length}
+                                p.profile-subsection-list-title: a(href=`/questions/${question.id}`) #{question.title}
+                                p.profile-subsection-list-date #{question.createdAt.toDateString()}
+                .profile-add-questions-box 
+                    h3.profile-subsection-header Ready to add a new Question?
+                    a(href="/questions"): button.login-button#profile-ask-question-btn I need help :(
+            .profile-posts-bottom
+                .profile-answers
+                    .profile-subsection-header-box
+                        i(class="fas fa-graduation-cap" id="profile-header-icon")
+                        h2.profile-subsection-header Answered Questions
+                    ul.profile-subsection-list.right-border
+                        each answer in userFound.Answers
+                            li.profile-subsection-list-item
+                                p.profile-subsection-list-answers Votes: #{answer.Votes.length}
+                                p.profile-subsection-list-title: a(href=`/answers/${answer.id}`) #{answer.title}
+                                p.profile-subsection-list-date #{answer.createdAt.toDateString()}
