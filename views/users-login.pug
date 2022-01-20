@@ -3,6 +3,8 @@ extends layout.pug
 include utils.pug
 
 block content
+    .logo-solo
+        a(href="/"): img(src="/images/AOLogo_Solo.png" class="login-page-logo")
     .errors-container
         +validationErrorSummary(errors)
     div.form-card

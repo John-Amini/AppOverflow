@@ -15,7 +15,7 @@ html
     nav.nav
       .hambuger-container: i(class="fas fa-bars" id="hamburger")
       .nav-logo-container.nav-hover
-        a(href="/"): img(src='/images/logo.svg.png' class="nav-logo ")
+        a(href="/"): img(src='/images/AOLogo.png' class="nav-logo ")
       ul.nav-list
         li.nav-list-item: a(href="/" class="nav-hover nav-list-link") Questions
         li.nav-list-item: a(href="/questions" class="nav-hover nav-list-link") New Question
@@ -24,9 +24,9 @@ html
         .nav-search-icon-container
           .nav-search-box
             i(class="fas fa-search" id="nav-search-icon")
-        form(action="#", method="post")
+        form(action="/search", method="post")
           input(type="hidden", name="_csrf" value="csrfToken")
-          input(class="form-input" type="text", name="search" placeholder='Search...')
+          input(class="form-input" type="search", name="search" placeholder='Search...')
       .nav-action-btns
       if (!locals.authenticated)
         a(href="/users/login" class="nav-action-login")  Login
