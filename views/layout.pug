@@ -31,8 +31,8 @@ html
         a(href="/users/login" class="nav-action-login")  Login
         a(href="/users/signup" class="nav-action-signup")  Sign up
       else
-        a(href=`users/${user.id}` class="fas fa-user-circle user-icon")
-          span(class='user-name-profile') #{user.username}
+        a(href=`/users/${locals.user.id}` class="fas fa-user-circle user-icon")
+          span(class='user-name-profile') #{locals.user.username}
         a(href="/users/logout" class="nav-action-logout") Log out
     block content
 

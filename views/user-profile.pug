@@ -1,12 +1,12 @@
 extends layout.pug
 
 block content 
-    h1 #{user.username}
+    h1 #{userFound.username}
     a(href="/users/1") link 
 
     .profile-questions
         ul.profile-questions-list
-    each question in user.Questions
+    each question in userFound.Questions
         li
             p=question.title
             p: a(href=`/questions/${question.id}`) View Question

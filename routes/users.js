@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 
 const db = require('../db/models');
 const { csrfProtection, asyncHandler, userSignupValidators, loginValidators } = require('./utils');
-const { loginUser, logoutUser, requireAuth } = require('../auth')
+const { loginUser, logoutUser, requireAuth, restoreUser } = require('../auth')
 
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+router.get('/', (req, res) => {
+  res.send("respond with resourc");
 });
 
 
@@ -85,7 +85,6 @@ router.post('/signup', userSignupValidators, csrfProtection, asyncHandler(async 
     const err = validationErrors.array().map(item => item.msg)
     res.render('user-signup', { title: 'Sign Up', csrfToken: req.csrfToken(), user, err })
   }
-
 }))
 
 router.get('/logout', (req, res) => {
@@ -93,17 +92,16 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/:id', requireAuth, asyncHandler(async (req, res) => {
-  const user = await db.User.findOne({
+router.get('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
+  const userFound = await db.User.findOne({
     where: { id: req.params.id },
     include: {
       model: db.Question
     }
   })
-  if (user) {
-    console.log(user)
-    res.render('user-profile', { user })
-
+  if (userFound) {
+    console.log(userFound)
+    res.render('user-profile', { userFound })
   } else {
     res.redirect('/')
   }
