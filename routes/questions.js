@@ -53,17 +53,38 @@ router.get('/:id' , asyncHandler(async(req,res,next) =>{
 
 }))
 
+
 router.delete('/:id',requireAuth,asyncHandler(async(req,res,next) => {
 
   const question = await Question.findByPk(req.params.id)
+
+  //need to find out how to delete all associated comments and answers
   if(question && question.user_id === res.locals.user.id){
     await question.destroy();
   }
   else{
     res.errors.push("You cannot delete this");
-    res.render("/");
+    res.render("index");
   }
-
-  res.send("Send a delete request")
+  console.log("redirectaksjhskjhfbajkfhasdkjfhskjhsflkjhfskljhakjlhfsdkjhf")
+  //redirecting back to main page does not work
+  req.method = 'GET'
+  console.log(req.method);
+  res.redirect(303,'/');
+}))
+router.put('/:id',requireAuth,asyncHandler(async(req,res,next) => {
+  const content = req.body.content;
+  const id = req.params.id;
+  const question = await Question.findByPk(id);
+  if(question && question.user_id === res.locals.user.id){
+    question.content = content;
+    await question.save();
+  } else{
+     res.send("Invalid Edit")
+   }
+  //if(){
+     //res.redirect(303,`/questions/${id}`);
+   //}
+   res.send("Edit valid");
 }))
 module.exports = router;
