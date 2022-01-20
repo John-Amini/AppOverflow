@@ -109,9 +109,9 @@
 }
 
 .nav-action-logout{
-    color: rgb(57,115,157);
+    color: rgb(249,252,255);
     border: 1px solid rgb(122,167,199);
-    background-color: rgb(225,236,244);
+    background-color: rgb(10,149,255);
 
 }
 
@@ -132,9 +132,9 @@
 }
 
 .user-icon {
-    color: rgb(122,167,199);
+    color: rgb(10,149,255);
     text-decoration: none;
-    font-size: 30px;
+    font-size: 35px;
     display: flex;
     justify-content: center;
 }
