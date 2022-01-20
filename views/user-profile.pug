@@ -1,12 +1,39 @@
 extends layout.pug
 
 block content 
-    h1 #{userFound.username}
-    a(href="/questions") link 
+    .profile-container
+        .profile-user-info
+            h1 Hello, #{userFound.username}
+            .profile-content-box
+                .profile-content
+                    i(class='fas fa-birthday-cake')
+                    p Member since: #{userFound.createdAt.toDateString()}
+                .profile-content
+                    i(class="fas fa-question")
+                    p Questions asked: #{userFound.Questions.length}
+                .profile-content
+                    i(class="fas fa-graduation-cap")
+                    p Questions answered: #{userFound.Answers.length}
 
-    .profile-questions
-        ul.profile-questions-list
-    each question in userFound.Questions
-        li
-            p=question.title
-            p: a(href=`/questions/${question.id}`) View Question
+
+        .profile-posts-container
+            .profile-questions
+                .profile-subsection-header-box
+                    i(class="fas fa-question" id="profile-header-icon")
+                    h2.profile-subsection-header Asked Questions
+                ul.profile-subsection-list.right-border
+                    each question in userFound.Questions
+                        li.profile-subsection-list-item
+                            p.profile-subsection-list-answers Answers: #{question.Answers.length}
+                            p.profile-subsection-list-title: a(href=`/questions/${question.id}`) #{question.title}
+                            p.profile-subsection-list-date #{question.createdAt.toDateString()}
+            .profile-answers
+                .profile-subsection-header-box
+                    i(class="fas fa-graduation-cap" id="profile-header-icon")
+                    h2.profile-subsection-header Answered Questions
+                ul.profile-subsection-list.right-border
+                    each answer in userFound.Answers
+                        li.profile-subsection-list-item
+                            p.profile-subsection-list-answers Votes: #{answer.Votes.length}
+                            p.profile-subsection-list-title: a(href=`/answers/${answer.id}`) #{answer.title}
+                            p.profile-subsection-list-date #{answer.createdAt.toDateString()}

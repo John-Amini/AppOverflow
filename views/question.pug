@@ -1,7 +1,19 @@
 extends layout.pug
 
+append head
+  link(rel="stylesheet" href="/stylesheets/questions.css")
+  script(src="/javascripts/question.js" type="module" defer)
+
 
 block content
      div(id=`question-container-${question.id}`).questionContainer
               h2= question.title
-              p= question.content
+              span(id='question-content')= question.content
+              if locals.user
+                if locals.user.id === question.user_id
+                    button(id=`question-delete`).delete-btn Delete
+                    button(id=`question-edit`).edit-btn Edit
+                        button(id='confirm-edit' hidden=true).confirm-btn Confirm
+                        button(id='cancel-edit' hidden=true).confirm-btn Cancel
+     div(id= `answer-container`).answerContainer
+        div(id= `comment-container`).commentContainer
