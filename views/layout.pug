@@ -14,7 +14,7 @@ html
     nav.nav
       .hambuger-container: i(class="fas fa-bars" id="hamburger")
       .nav-logo-container.nav-hover
-        img(src='/images/logo.svg.png' class="nav-logo ")
+        a(href="/"): img(src='/images/logo.svg.png' class="nav-logo ")
       ul.nav-list
         li.nav-list-item: a(href="#" class="nav-hover nav-list-link") About
         li.nav-list-item: a(href="#" class="nav-hover nav-list-link") Products
@@ -31,8 +31,8 @@ html
         a(href="/users/login" class="nav-action-login")  Login
         a(href="/users/signup" class="nav-action-signup")  Sign up
       else
-        a(href='users/:id' class="fas fa-user-circle user-icon")
-          span(class='user-name-profile') #{user.username}
+        a(href=`/users/${locals.user.id}` class="fas fa-user-circle user-icon")
+          span(class='user-name-profile') #{locals.user.username}
         a(href="/users/logout" class="nav-action-logout") Log out
     block content
 
