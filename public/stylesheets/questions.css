@@ -1,0 +1,7 @@
+.editable{
+    outline: 3px solid black;
+}
+
+.editable:nth-child(even){
+    background-color: hsl(0deg 0% 100%);
+}
