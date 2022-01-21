@@ -55,6 +55,7 @@ router.post('/', requireAuth, questionValidation, asyncHandler(async (req, res, 
 router.get('/:id', asyncHandler(async (req, res, next) => {
   let id = req.params.id;
   const question = await Question.findByPk(id, {
+
     order: [
       [db.Answer,'updatedAt', 'DESC']
     ],
@@ -70,7 +71,8 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
      }
   });
   const listOfAnswers = question.Answers;
-  res.render('question', { question, listOfAnswers});
+  const userPostedQuestion = question.User.dataValues
+  res.render('question', { question, listOfAnswers,userPostedQuestion });
 }))
 
 
@@ -144,18 +146,18 @@ router.delete('/:id/answers/:answerId', asyncHandler(async (req, res, next) => {
     res.redirect('back')
   }
 }))
-router.put('/:id/answers/:answerId',requireAuth,asyncHandler(async(req,res,next) => {
+router.put('/:id/answers/:answerId', requireAuth, asyncHandler(async (req, res, next) => {
   const content = req.body.content;
   const id = req.params.id;
   const answerId = req.params.answerId
   const answer = await Answer.findByPk(answerId);
-  if(answer && answer.user_id === res.locals.user.id){
+  if (answer && answer.user_id === res.locals.user.id) {
     answer.content = content;
     await answer.save();
-  } else{
-     res.send("Invalid Edit")
-   }
-   res.send("Edit valid");
+  } else {
+    res.send("Invalid Edit")
+  }
+  res.send("Edit valid");
 }))
 router.post('/:id/comments',requireAuth, commentValidation,asyncHandler(async (req,res,next)=>{
   let newCommentContent = req.body.newCommentContent;
