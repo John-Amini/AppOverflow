@@ -2,11 +2,14 @@ extends layout.pug
 include utils.pug
 block content
     +validationErrorSummary(errors)
-    div(id="questionFormContainer").form-style-2
-        form(action="/questions" method="post").questionForm
-                input(type="hidden" name="_csrf" value=csrfToken)
-                label(for="title") Title
-                input(type="text" name="title" value= (body === undefined)? "":body.title)
-                label(for="content") Details
-                textarea(type="textarea" name="content").questionTextArea=(body === undefined)? "":body.content
-                button(id="postQuestion") Post Question
+    .q-page-size-adjust
+     div.question-form-page-content
+        h2.question-header Ask a public question
+        div(id="questionFormContainer").form-style-2
+            form(action="/questions" method="post").questionForm
+                    input(type="hidden" name="_csrf" value=csrfToken)
+                    label(for="title" class='q-title') Title
+                    input(type="text" name="title" class='title-input' value= (body === undefined)? "":body.title)
+                    label(for="content") Details
+                    textarea(type="textarea" name="content").questionTextArea=(body === undefined)? "":body.content
+                    button(id="postQuestion") Post Question
