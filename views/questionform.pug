@@ -11,5 +11,5 @@ block content
                     label(for="title" class='q-title') Title
                     input(type="text" name="title" class='title-input' value= (body === undefined)? "":body.title)
                     label(for="content") Details
-                    textarea(type="textarea" name="content").questionTextArea=(body === undefined)? "":body.content
+                    textarea(type="textarea" name="content").questionTextArea=(body === undefined)? "":body.newAnswerContent
                     button(id="postQuestion") Post Question
