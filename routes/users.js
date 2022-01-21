@@ -101,7 +101,7 @@ router.get('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     },
     {
       model: db.Answer,
-      include: db.Vote
+      include: [db.Vote, db.Question]
     }],
   })
   if (userFound) {
