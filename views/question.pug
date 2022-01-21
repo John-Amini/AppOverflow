@@ -8,6 +8,7 @@ append head
 
 
 block content
+
     
     div(id=`question-container-${question.id}`).question-container
             h1.question-top-section-title= question.title
@@ -47,4 +48,23 @@ block content
                                 button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn-answer Edit
                                 button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn-answer Cancel
                                 button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn-answer Confirm
-                    div(id= `comment-container`).commentContainer
+                    if locals.user
+                        .answer-add-coment-box
+                            form(action=`/questions/${question.id}/comments` method="post")
+                                input(type="hidden" name="_csrf" value=csrfToken)
+                                input(type="hidden" name="answerId" value= answer.id)
+                                label(for="new-comment-content") New Comment
+                                textarea(type="textarea" name="newCommentContent").create-comment-content
+                                button(id="postComment" type="submit") Post Comment
+                    div(id= `comment-List-container`).commentListContainer
+                        if answer.Comments
+                            each comment in answer.Comments
+                                div(id=`comment-container-${comment.id}`).commentContainer
+                                    span(id=`comment-content-${comment.id}`).comment-content= comment.content
+                                    if locals.user
+                                        if locals.user.id === comment.user_id
+                                            div.buttonsContainer
+                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn-comment Delete Comment
+                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn-comment Edit Comment
+                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn-comment Confirm Edit
+                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn-comment Cancel Edit
