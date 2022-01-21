@@ -7,16 +7,16 @@ append head
 block content 
     .profile-container
         .profile-user-info
-            h1 Hello, #{userFound.username}
+            h1 #{userFound.username}
             .profile-content-box
                 .profile-content
-                    i(class='fas fa-birthday-cake')
-                    p Member since: #{userFound.createdAt.toDateString()}
-                .profile-content
-                    i(class="fas fa-question")
+                    i(class="fas fa-question" id="profile-question-icon")
                     p Questions asked: #{userFound.Questions.length}
                 .profile-content
-                    i(class="fas fa-graduation-cap")
+                    i(class='fas fa-birthday-cake' id='profile-peers-icon')
+                    p Member since: #{userFound.createdAt.toDateString()}
+                .profile-content
+                    i(class="fas fa-graduation-cap" id="profile-grad-icon")
                     p Questions answered: #{userFound.Answers.length}
 
 
@@ -24,13 +24,13 @@ block content
             .profile-posts-top
                 .profile-questions
                     .profile-subsection-header-box
-                        i(class="fas fa-question" id="profile-header-icon")
+                        i(class="fas fa-question" id="profile-header-question-icon")
                         h2.profile-subsection-header Asked Questions
                     ul.profile-subsection-list
                         each question in userFound.Questions
-                            li.profile-subsection-list-item
+                            li.profile-subsection-list-item.profile-table-item
                                 p.profile-subsection-list-answers Answers: #{question.Answers.length}
-                                p.profile-subsection-list-title: a(href=`/questions/${question.id}`) #{question.title}
+                                p.profile-subsection-list-title: a(href=`/questions/${question.id}` class='profile-table-link') #{question.title}
                                 p.profile-subsection-list-date #{question.createdAt.toDateString()}
                 .profile-add-questions-box 
                     h3.profile-subsection-header Ready to add a new Question?
@@ -39,19 +39,26 @@ block content
             .profile-posts-bottom
                 .profile-peers-box
                     .profile-subsection-header-box
-                        i(class="fas fa-crown")
+                        i(class="fas fa-crown" id='profile-peers-icon')
                         h2.profile-subsection-header Peers
                     ul.profile-peers-list
 
 
-
                 .profile-answers
-                    .profile-subsection-header-box
-                        i(class="fas fa-graduation-cap" id="profile-header-icon")
-                        h2.profile-subsection-header Answered Questions
-                    ul.profile-subsection-list.right-border
-                        each answer in userFound.Answers
-                            li.profile-subsection-list-item
-                                p.profile-subsection-list-answers Votes: #{answer.Votes.length}
-                                p.profile-subsection-list-title: a(href=`/answers/${answer.id}`) #{answer.title}
-                                p.profile-subsection-list-date #{answer.createdAt.toDateString()}
+                    if userFound.Answers.length
+                        .profile-subsection-header-box
+                            i(class="fas fa-graduation-cap" id="profile-header-grad-icon")
+                            h2.profile-subsection-header Answered Questions
+                        ul.profile-subsection-list
+                            each answer in userFound.Answers
+                                li.profile-subsection-list-item.profile-table-item
+                                    p.profile-subsection-list-answers Votes: #{answer.Votes.length}
+                                    p.profile-subsection-list-title: a(href=`/answers/${answer.id}` class='profile-table-link') #{answer.Question.title}
+                                    p.profile-subsection-list-date #{answer.createdAt.toDateString()}
+                    else
+                        .profile-add-questions-box 
+                            .profile-subsection-header-box
+                                i(class="fas fa-graduation-cap" id="profile-header-grad-icon")
+                                h2.profile-subsection-header Answered Questions
+                            p.profile-no-answer Uh oh, it seems you have not helped anyone yet!
+                            a(href="/questions"): button.login-button#profile-ask-question-btn View Questions
