@@ -54,8 +54,9 @@ router.post('/', requireAuth, questionValidation, asyncHandler(async (req, res, 
 router.get('/:id', asyncHandler(async (req, res, next) => {
   let id = req.params.id;
   const question = await Question.findByPk(id, {
-    include: db.User
+    include: [db.User, Answer]
   });
+  const userPostedQuestion = question.User.dataValues
   console.log("askdjhbaskdbaskd")
   console.log(id)
   console.log("ALOKINJDSLKASDLKADLKASJDNNLK")
@@ -66,7 +67,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
       question_id: id
     }
   })
-  res.render('question', { question, listOfAnswers });
+  res.render('question', { question, listOfAnswers, userPostedQuestion });
 
 }))
 
@@ -142,17 +143,17 @@ router.delete('/:id/answers/:answerId', asyncHandler(async (req, res, next) => {
     res.redirect('back')
   }
 }))
-router.put('/:id/answers/:answerId',requireAuth,asyncHandler(async(req,res,next) => {
+router.put('/:id/answers/:answerId', requireAuth, asyncHandler(async (req, res, next) => {
   const content = req.body.content;
   const id = req.params.id;
   const answerId = req.params.answerId
   const answer = await Answer.findByPk(answerId);
-  if(answer && answer.user_id === res.locals.user.id){
+  if (answer && answer.user_id === res.locals.user.id) {
     answer.content = content;
     await answer.save();
-  } else{
-     res.send("Invalid Edit")
-   }
-   res.send("Edit valid");
+  } else {
+    res.send("Invalid Edit")
+  }
+  res.send("Edit valid");
 }))
 module.exports = router;
