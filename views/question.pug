@@ -9,13 +9,7 @@ append head
 
 
 block content
-    if locals.user
-        +validationErrorSummary(errors)
-        form(action=`/questions/${question.id}/answers` method="post")
-            input(type="hidden" name="_csrf" value=csrfToken)
-            label(for="new-answer-content") New Answer
-            textarea(type="textarea" name="newAnswerContent").create-answer-content=(body === undefined)? "":body.content
-            button(id="postQuestion" type="submit") Post Answer
+    
     div(id=`question-container-${question.id}`).questionContainer
               h2= question.title
               span(id='question-content')= question.content
@@ -25,6 +19,14 @@ block content
                     button(id=`question-edit`).edit-btn Edit
                         button(id='confirm-edit' hidden=true).confirm-btn Confirm
                         button(id='cancel-edit' hidden=true).confirm-btn Cancel
+    if locals.user
+        .questions-add-answer-box
+            +validationErrorSummary(errors)
+            form(action=`/questions/${question.id}/answers` method="post")
+                input(type="hidden" name="_csrf" value=csrfToken)
+                label(for="new-answer-content") New Answer
+                textarea(type="textarea" name="newAnswerContent").create-answer-content=(body === undefined)? "":body.content
+                button(id="postQuestion" type="submit") Post Answer
     div(id= `answer-List-container`).answerContainer
         if listOfAnswers
             each answer in listOfAnswers
