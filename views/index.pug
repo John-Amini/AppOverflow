@@ -6,18 +6,20 @@ append head
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 block content
-  h1= title
+  //-h1= title
   div(id='questionButtonContainer')
-    a(href="/questions") Ask Question
+    h2 Recently Updated Questions
+    a(id='ask-question' href="/questions") Ask Question
   div(id='questionList-Container')
-    each question in listOfQuestions
-          div(id=`question-container-${question.id}`).questionContainer
-              h2= question.title
-              span(id=`content-${question.id}`)= question.content
-              a(href=`/questions/${question.id}`) Question Page
-              if locals.user
-                if locals.user.id === question.user_id
-                      button(id=question.id).delete-btn Delete
-                      button(id=`${question.id}-edit`).edit-btn Edit
+    div(id='questionList-innerContainer')
+      each question in listOfQuestions
+            div(id=`question-container-${question.id}`).questionContainer
+                a(href=`/questions/${question.id}`).question-title= question.title
+                span(id=`content-${question.id}`).question-content= question.content
+                if locals.user
+                  if locals.user.id === question.user_id
+                    div.buttonsContainer
+                        button(id=`${question.id}-delete` data-inline="true" ).delete-btn Delete
+                        button(id=`${question.id}-edit`  data-inline="true" ).edit-btn Edit
+                        button(id=`cancel-edit-${question.id}` hidden=true).cancel-btn Cancel
                         button(id=`confirm-edit-${question.id}` hidden=true).confirm-btn Confirm
-                        button(id=`cancel-edit-${question.id}` hidden=true).confirm-btn Cancel

@@ -1,4 +1,120 @@
-h1 {
-    color: #555555;
+#questionButtonContainer {
+    /* box-shadow: 0 -4px 50px 1px black; */
+    background-color: hsl(0deg 0% 100%);
+    border-top: .2px solid gainsboro;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+    position: relative;
+    border-bottom: .2px solid gainsboro;;
+}
+html{
+    background-color: hsl(0deg 0% 100%);
+}
+#ask-question{
+    position:absolute;
+    margin-left: 1000px;
+    margin-top: 20px;
+    color: rgb(249,252,255);
+    border: 1px solid rgb(122,167,199);
+    background-color: rgb(10,149,255);
+    text-decoration: none;
+    padding: 0.8em;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 3px;
+    width: fit-content
+}
+h2 {
+    font-size: 45px
+}
+#questionList-Container{
+    display:block;
+    justify-content: right;
+    flex-direction: column;
+    text-align: left;
 }
 
+.questionContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+ .questionContainer:nth-child(odd){
+    /* background-color: #E0FFFF; */
+    background-color: hsl(0deg 0% 100%);
+    border-bottom: 2px solid black;
+}
+
+.questionContainer:nth-child(even){
+    border-bottom: 2px solid black;
+}
+.editable:nth-child(even){
+    background-color: hsl(0deg 0% 100%);
+}
+.question-title{
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+    font-weight: bold;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    color: #2389ff;
+    margin-bottom: 13px;
+    margin-top: 17px;
+}
+
+.question-content{
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    height: fit-content;
+    padding: 15px 15px 15px 15px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.editable{
+    outline: 3px solid black;
+}
+
+.edit-btn, .delete-btn, .cancel-btn, .confirm-btn{
+    color: rgb(249,252,255);
+    border: 1px solid rgb(122,167,199);
+    background-color: rgb(10,149,255);
+    text-decoration: none;
+    padding: 0.8em;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 3px;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+.edit-btn{
+    margin-right: 15px;
+}
+.delete-btn{
+    margin-left: 15px;
+}
+.cancel-btn,.confirm-btn{
+    margin-right: 15px;
+}
+.edit-btn,.cancel-btn , .confirm-btn{
+
+    position: relative;
+    float: right;
+}
+.buttonsContainer{
+    display: inline-block;
+    position: relative;
+}
