@@ -1,5 +1,9 @@
 extends layout.pug
 
+append head
+    script(src="/javascripts/user-profile.js" type='module' defer) 
+
+
 block content 
     .profile-container
         .profile-user-info
@@ -31,7 +35,16 @@ block content
                 .profile-add-questions-box 
                     h3.profile-subsection-header Ready to add a new Question?
                     a(href="/questions"): button.login-button#profile-ask-question-btn I need help :(
+
             .profile-posts-bottom
+                .profile-peers-box
+                    .profile-subsection-header-box
+                        i(class="fas fa-crown")
+                        h2.profile-subsection-header Peers
+                    ul.profile-peers-list
+
+
+
                 .profile-answers
                     .profile-subsection-header-box
                         i(class="fas fa-graduation-cap" id="profile-header-icon")
