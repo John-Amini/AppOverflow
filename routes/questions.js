@@ -140,4 +140,17 @@ router.delete('/:id/answers/:answerId', asyncHandler(async (req,res,next)=>{
     res.redirect('back')
   }
 }))
+router.put('/:id/answers/:answerId',requireAuth,asyncHandler(async(req,res,next) => {
+  const content = req.body.content;
+  const id = req.params.id;
+  const answerId = req.params.answerId
+  const answer = await Answer.findByPk(answerId);
+  if(answer && answer.user_id === res.locals.user.id){
+    answer.content = content;
+    await answer.save();
+  } else{
+     res.send("Invalid Edit")
+   }
+   res.send("Edit valid");
+}))
 module.exports = router;
