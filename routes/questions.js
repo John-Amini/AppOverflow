@@ -17,9 +17,9 @@ const questionValidation = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide some content for your question.'),
 ];
-router.get('/',requireAuth,asyncHandler(function(req, res, next) {
-  res.render('questionform',{body:{}});
-}));
+router.get('/',requireAuth,function(req, res, next) {
+  res.render("questionform",{body:{}});
+});
 
 router.post('/', requireAuth ,questionValidation,asyncHandler(async (req,res,next)=> {
   const {title  , content} = req.body
