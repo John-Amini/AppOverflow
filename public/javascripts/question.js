@@ -4,6 +4,7 @@ window.addEventListener("load", (event)=>{
     let cancelEditButton = document.getElementById("cancel-edit");
     let originalContent = document.getElementById('question-content');
     let originalContentText = originalContent.textContent;
+        if(deleteButton)
         deleteButton.addEventListener("click",async (e)=> {
             e.preventDefault();
             let questionId = findQuestionId(e)
@@ -15,13 +16,14 @@ window.addEventListener("load", (event)=>{
         })
 
     let editButton = document.getElementById("question-edit");
+    if(editButton)
         editButton.addEventListener("click",async (e)=> {
             e.preventDefault();
             originalContent.setAttribute("contenteditable","true")
             originalContent.classList.add("editable")
             toggleEdits();
         })
-
+        if(confirmEditButton)
         confirmEditButton.addEventListener("click",async (e) =>{
             let questionId = findQuestionId(e);
             let url = getURL() + '/';
@@ -39,9 +41,9 @@ window.addEventListener("load", (event)=>{
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({content:changedContentText})
             });
-            window.location.href = window.location;
+            // window.location.href = window.location;
         })
-
+        if(cancelEditButton)
         cancelEditButton.addEventListener("click", async (e) =>{
             originalContent.textContent = originalContentText;
             originalContent.toggleAttribute('contenteditable');
