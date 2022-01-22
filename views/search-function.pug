@@ -9,13 +9,18 @@ append head
 block content
   h1 Search Results
   div(id='questionButtonContainer')
-    a(href="/questions") Ask Question
+    a(href="/questions").edit-btn.search-ask-question-button Ask Question
   div(id='questionList-Container')
     each question in listOfQuestions
           div(id=`question-container-${question.id}`).questionContainer
-              h2.question-title= question.title
+              h2: a(href=`/questions/${question.id}`).question-title.search-question-title= question.title
               p.question-content= question.content
-              a(href=`/questions/${question.id}`).edit-btn.view-question-page Question Page
+              .question-info
+                p Posted by: #{question.User.dataValues.username}
+                a(href=`/questions/${question.id}`).edit-btn.view-question-page Question Page
+                .search-answers-content
+                  i(class="fas fa-graduation-cap" id="profile-header-grad-icon")
+                  p #{question.Answers.length}            
               if locals.user
                 if locals.user.id === question.user_id
                       button(id=question.id).delete-btn Delete

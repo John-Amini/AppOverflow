@@ -67,6 +67,7 @@ h2 {
     color: #2389ff;
     margin-bottom: 13px;
     margin-top: 17px;
+    text-decoration: none;
 }
 
 .question-content{
@@ -120,6 +121,40 @@ h2 {
     position: relative;
 }
 
+.question-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center
+}
+
+.question-info > *{
+    flex: 2;
+}
+
 .view-question-page{
-    margin: 0 auto 25px;
+    flex:1;
+}
+
+.search-question-title{
+    text-align: center;
+}
+
+.search-ask-question-button{
+    margin-top: 30px;
+    margin-right: 0;
+    background-color: rgba(244, 130, 37, 1);
+}
+
+.search-question-title:hover{
+    color:rgba(244, 130, 37, 1);
+}
+
+#profile-header-grad-icon{
+    color: rgba(244, 130, 37, 1);
+}
+
+.search-answers-content p{
+    display: inline-block;
+    margin-left: 10px;
 }
