@@ -81,3 +81,81 @@
 .question-user-profile-link:hover{
     color:rgba(244, 130, 37, 1);
 }
+
+/* answer form section */
+
+.questions-add-answer-box{
+    height: 200px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.question-answer-header, .question-answer-header span{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.question-answer-header span{
+    color:rgba(244, 130, 37, 1);
+}
+
+.question-answer-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.question-answer-textarea{
+    max-width: 100%;
+    min-height: 200px;
+}
+
+.post-answer{
+    margin: auto;
+    width: 150px;
+}
+
+/* answer list section */
+
+.answerContainer{
+    width: 80%;
+    margin: 0 auto 50px;
+}
+
+.answer-list-header-box h2{
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.answer-list-header-box i{
+    font-size: 30px;
+}
+
+.answer-add-comment-box{
+    visibility: hidden;
+}
+
+.buttons-comment-action button, .buttonsContainer button{
+    margin-right: 20px;
+}
+
+.comment-list-item{
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+}
+
+.comment-content{
+    margin-bottom: 30px;
+}
+
+.buttonsContainer{
+    margin-top: 30px;
+}
+
+
+
+
+
+
