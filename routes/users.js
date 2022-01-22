@@ -111,4 +111,42 @@ router.get('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
   }
 }))
 
+router.post('/login/demo', csrfProtection, loginValidators,
+  asyncHandler(async (req, res) => {
+    const {
+      emailAddress,
+      password,
+    } = req.body;
+
+    let errors = [];
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+      console.log(emailAddress)
+      const user = await db.User.findOne({ where: { email: emailAddress } });
+      console.log(user)
+      if (user !== null) {
+        console.log(user.hashed_password)
+        const passwordMatch = await bcrypt.compare(password, user.hashed_password.toString());
+        if (passwordMatch) {
+          loginUser(req, res, user);
+          return res.redirect('/');
+        }
+      }
+
+      errors.push('Login failed for the provided email address and password');
+    } else {
+      errors = validatorErrors.array().map((error) => error.msg);
+    }
+
+    res.render('users-login', {
+      title: 'Login',
+      emailAddress,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  }));
+
+
+
 module.exports = router;
