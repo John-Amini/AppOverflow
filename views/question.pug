@@ -28,28 +28,27 @@ block content
                             button(id='cancel-edit' hidden=true).confirm-btn Cancel
             .question-content
                 span(id='question-content')= question.content
-    if locals.user
-        .questions-add-answer-box
-            +validationErrorSummary(errors)
-            form(action=`/questions/${question.id}/answers` method="post")
-                input(type="hidden" name="_csrf" value=csrfToken)
-                label(for="new-answer-content") New Answer
-                textarea(type="textarea" name="newAnswerContent").create-answer-content=(body === undefined)? "":body.content
-                button(id="postQuestion" type="submit") Post Answer
+
+
     div(id= `answer-List-container`).answerContainer
+        .answer-list-header-box
+            i(class="fas fa-graduation-cap" id="profile-grad-icon")
+            h2.question-answer-header Answers
+            i(class="fas fa-graduation-cap" id="profile-grad-icon")
         if listOfAnswers
             each answer in listOfAnswers
-                div(id=`answer-container-${answer.id}`).answerContainer
+                div(id=`answer-container-${answer.id}`).answer-list-item
                     span(id= `answer-content-${answer.id}`).answer-content= answer.content
                     if locals.user
                         if locals.user.id === answer.user_id
-                            div.buttonsContainer
-                                button(id=`${answer.id}-delete` data-inline="true" ).delete-btn-answer Delete
-                                button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn-answer Edit
-                                button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn-answer Cancel
-                                button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn-answer Confirm
+                            div.buttons-comment-action
+                                button(id=`${answer.id}-delete` data-inline="true" ).delete-btn Delete
+                                button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn Edit
+                                button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn Cancel
+                                button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn Confirm
+                                button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
-                        .answer-add-coment-box
+                        .answer-add-comment-box
                             form(action=`/questions/${question.id}/comments` method="post")
                                 input(type="hidden" name="_csrf" value=csrfToken)
                                 input(type="hidden" name="answerId" value= answer.id)
@@ -59,12 +58,22 @@ block content
                     div(id= `comment-List-container`).commentListContainer
                         if answer.Comments
                             each comment in answer.Comments
-                                div(id=`comment-container-${comment.id}`).commentContainer
+                                div(id=`comment-container-${comment.id}`).comment-list-item
                                     span(id=`comment-content-${comment.id}`).comment-content= comment.content
                                     if locals.user
                                         if locals.user.id === comment.user_id
                                             div.buttonsContainer
-                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn-comment Delete Comment
-                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn-comment Edit Comment
-                                                button(id=`cancel-edit-${comment.id}` hidden=true).cancel-btn-comment Cancel Edit
-                                                button(id=`confirm-edit-${comment.id}` hidden=true).confirm-btn-comment Confirm Edit
+
+                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn.delete-btn-comment Delete Comment
+                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn.edit-btn-comment Edit Comment
+                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn.cancel-btn-comment Confirm Edit
+                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn.confirm-btn-comment Cancel Edit
+    if locals.user
+        .questions-add-answer-box
+            h2.question-answer-header Have the <span>answer</span>?
+            +validationErrorSummary(errors)
+            form(action=`/questions/${question.id}/answers` method="post" class='question-answer-form')
+                input(type="hidden" name="_csrf" value=csrfToken)
+                textarea(type="textarea" name="newAnswerContent").create-answer-content.question-answer-textarea=(body === undefined)? "":body.content
+                button(type="submit").edit-btn.post-answer Post Answer
+

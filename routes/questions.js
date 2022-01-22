@@ -189,8 +189,10 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   }
   else {
     try {
-      const newComment = await Comment.create({ answer_id: answerId, content: newCommentContent, user_id: res.locals.user.id })
+      await Comment.create({ answer_id: answerId, content: newCommentContent, user_id: res.locals.user.id })
       await updateUpdatedAt(question);
+      let answer = findAssociatedAnswer(listOfAnswers,answerId);
+      await updateUpdatedAt(answer);
       return res.redirect(`/questions/${questionId}`)
     } catch (err) {
       req.errors.push("Something went wrong try again");
@@ -237,5 +239,13 @@ async function updateUpdatedAt(question) {
   await question.update({
     updatedAt: new Date()
   })
+}
+function findAssociatedAnswer (listOfAnswers ,answerId){
+
+  for(const currAnswer of listOfAnswers){
+    if(currAnswer.dataValues.id == answerId){
+      return currAnswer
+    }
+  }
 }
 module.exports = router;
