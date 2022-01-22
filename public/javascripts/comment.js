@@ -36,7 +36,7 @@ window.addEventListener("load", (event)=>{
 
 
     function addEventListenerCancel(e,commentId,textContentOriginal,content){
-        let currCancelEditButton = document.getElementById(`cancel-edit-${commentId}`)
+        let currCancelEditButton = document.getElementById(`cancel-edit-comment-${commentId}`)
         if(currCancelEditButton && !currCancelEditButton.hasAttribute('listenerOnClick')){
             currCancelEditButton.addEventListener('click',async(e)=>{
                 content.textContent = textContentOriginal;
@@ -48,7 +48,7 @@ window.addEventListener("load", (event)=>{
     }
 
     function addEventListenerConfirm(originalEvent,commentId,content){
-        let currConfirmEditButton = document.getElementById(`confirm-edit-${commentId}`)
+        let currConfirmEditButton = document.getElementById(`confirm-edit-comment-${commentId}`)
         if(currConfirmEditButton && !currConfirmEditButton.hasAttribute('listenerOnClick')){
             currConfirmEditButton.addEventListener(`click`,async (e) => {
                 let url = getURL() + '/';
@@ -102,9 +102,9 @@ window.addEventListener("load", (event)=>{
     }
 
     function toggleEdits(commentId){
-        document.getElementById(`${commentId}-edit`).toggleAttribute("hidden");
-        document.getElementById(`cancel-edit-${commentId}`).toggleAttribute("hidden");
-        document.getElementById(`confirm-edit-${commentId}`).toggleAttribute("hidden");
+        document.getElementById(`${commentId}-edit-comment`).toggleAttribute("hidden");
+        document.getElementById(`cancel-edit-comment-${commentId}`).toggleAttribute("hidden");
+        document.getElementById(`confirm-edit-comment-${commentId}`).toggleAttribute("hidden");
     }
 
 

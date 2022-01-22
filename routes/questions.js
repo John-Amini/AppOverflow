@@ -121,13 +121,13 @@ router.post('/:id/answers', requireAuth, answerValidation, asyncHandler(async (r
     try {
       const newAnswer = await Answer.create({ question_id: req.params.id, content: newAnswerContent, user_id: res.locals.user.id });
       await updateUpdatedAt(question);
-      res.redirect(`/questions/${req.params.id}`);
+      return res.redirect(`/questions/${req.params.id}`);
+
     }
     catch (err) {
       req.errors.push("Something went wrong try again");
       res.render("question", { body: req.body, errors: req.errors });
     }
-    res.redirect(`/questions/${req.params.id}`);
   }
 
 }))

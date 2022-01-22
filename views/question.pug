@@ -24,8 +24,8 @@ block content
                     .question-actions
                         button(id=`question-edit`).edit-btn Edit
                         button(id=`question-delete`).delete-btn Delete
-                            button(id='confirm-edit' hidden=true).confirm-btn Confirm
-                            button(id='cancel-edit' hidden=true).confirm-btn Cancel
+                            button(id='confirm-edit-question' hidden=true).confirm-btn Confirm
+                            button(id='cancel-edit-question' hidden=true).confirm-btn Cancel
             .question-content
                 span(id='question-content')= question.content
 
@@ -42,10 +42,10 @@ block content
                     if locals.user
                         if locals.user.id === answer.user_id
                             div.buttons-comment-action
-                                button(id=`${answer.id}-delete` data-inline="true" ).delete-btn-answer Delete
-                                button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn-answer Edit
-                                button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn-answer Cancel
-                                button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn-answer Confirm
+                                button(id=`${answer.id}-delete-answer` data-inline="true" ).delete-btn-answer Delete
+                                button(id=`${answer.id}-edit-answer`  data-inline="true" ).edit-btn-answer Edit
+                                button(id=`cancel-edit-answer-${answer.id}` hidden=true).cancel-btn-answer Cancel
+                                button(id=`confirm-edit-answer-${answer.id}` hidden=true).confirm-btn-answer Confirm
                                 button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
                         .answer-add-comment-box
@@ -64,10 +64,10 @@ block content
                                         if locals.user.id === comment.user_id
                                             div.buttonsContainer
 
-                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn.delete-btn-comment Delete Comment
-                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn.edit-btn-comment Edit Comment
-                                                button(id=`cancel-edit-${comment.id}` hidden=true).cancel-btn-comment Cancel Edit
-                                                button(id=`confirm-edit-${comment.id}` hidden=true).confirm-btn-comment Confirm Edit
+                                                button(id=`${comment.id}-delete-comment` data-inline='true').delete-btn.delete-btn-comment Delete Comment
+                                                button(id=`${comment.id}-edit-comment` data-inline='true').edit-btn.edit-btn-comment Edit Comment
+                                                button(id=`cancel-edit-comment-${comment.id}` hidden=true).cancel-btn-comment Cancel Edit
+                                                button(id=`confirm-edit-comment-${comment.id}` hidden=true).confirm-btn-comment Confirm Edit
     if locals.user
         .questions-add-answer-box
             h2.question-answer-header Have the <span>answer</span>?
