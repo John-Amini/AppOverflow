@@ -55,7 +55,7 @@ block content
                             each answer in userFound.Answers
                                 li.profile-subsection-list-item.profile-table-item
                                     p.profile-subsection-list-answers Votes: #{answer.Votes.length}
-                                    p.profile-subsection-list-title: a(href=`/answers/${answer.id}` class='profile-table-link') #{answer.Question.title}
+                                    p.profile-subsection-list-title: a(href=`/questions/${answer.Question.id}` class='profile-table-link') #{answer.Question.title}
                                     p.profile-subsection-list-date #{answer.createdAt.toDateString()}
                     else
                         .profile-add-questions-box 
