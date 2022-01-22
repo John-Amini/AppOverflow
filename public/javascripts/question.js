@@ -57,9 +57,8 @@ window.addEventListener("load", (event)=>{
             editButton.toggleAttribute("hidden");
         }
         function findQuestionId(e){
-            let containerId = e.path[1].id;
-            let arr = containerId.split("-");
-            let questionId = arr[arr.length-1];
+            var question = window.location.href.split('/')
+            let questionId = question[question.length-1]
             return questionId;
         }
         function getURL(){
