@@ -9,14 +9,14 @@ append head
 
 block content
 
-    
+
     div(id=`question-container-${question.id}`).question-container
             h1.question-top-section-title= question.title
-            .question-user-info 
+            .question-user-info
                 p.question-user-info-item Posted: #{question.createdAt.toDateString()}
-                p.question-user-info-item Posted By: 
+                p.question-user-info-item Posted By:
                     a(href=`/users/${userPostedQuestion.id}` class='question-user-profile-link') #{userPostedQuestion.username}
-                .question-user-info-item 
+                .question-user-info-item
                     i(class="fas fa-graduation-cap" id="profile-grad-icon")
                     p.question-user-info-content #{question.Answers.length} answers
             if locals.user
@@ -66,5 +66,5 @@ block content
                                             div.buttonsContainer
                                                 button(id=`${comment.id}-delete` data-inline='true').delete-btn-comment Delete Comment
                                                 button(id=`${comment.id}-edit` data-inline='true').edit-btn-comment Edit Comment
-                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn-comment Confirm Edit
-                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn-comment Cancel Edit
+                                                button(id=`cancel-edit-${comment.id}` hidden=true).cancel-btn-comment Cancel Edit
+                                                button(id=`confirm-edit-${comment.id}` hidden=true).confirm-btn-comment Confirm Edit
