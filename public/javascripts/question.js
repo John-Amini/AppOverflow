@@ -1,7 +1,7 @@
 window.addEventListener("load", (event) => {
     let deleteButton = document.getElementById("question-delete")
-    let confirmEditButton = document.getElementById("confirm-edit");
-    let cancelEditButton = document.getElementById("cancel-edit");
+    let confirmEditButton = document.getElementById("confirm-edit-question");
+    let cancelEditButton = document.getElementById("cancel-edit-question");
     let originalContent = document.getElementById('question-content');
     let originalContentText = originalContent.textContent;
     if (deleteButton)

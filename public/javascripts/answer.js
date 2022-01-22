@@ -42,9 +42,9 @@ window.addEventListener("load", (event)=>{
         return url[url.length-1]
     }
     function toggleEdits(answerId){
-        document.getElementById(`${answerId}-edit`).toggleAttribute("hidden");
-        document.getElementById(`cancel-edit-${answerId}`).toggleAttribute("hidden");
-        document.getElementById(`confirm-edit-${answerId}`).toggleAttribute("hidden");
+        document.getElementById(`${answerId}-edit-answer`).toggleAttribute("hidden");
+        document.getElementById(`cancel-edit-answer-${answerId}`).toggleAttribute("hidden");
+        document.getElementById(`confirm-edit-answer-${answerId}`).toggleAttribute("hidden");
     }
 
     function toggleClassAndEditable(content){
@@ -52,8 +52,9 @@ window.addEventListener("load", (event)=>{
         content.classList.toggle("editable")
     }
 
-    function addEventListenerCancel(originalEvent,answerId,originalText,originalContent){
-        let currCancelEditButton = document.getElementById(`cancel-edit-${answerId}`);
+    function addEventListenerCancel(originalEvent,answerId,originaltextchange,originalContent){
+        let currCancelEditButton = document.getElementById(`cancel-edit-answer-${answerId}`);
+        let originalText = originaltextchange;
         if(currCancelEditButton && !currCancelEditButton.hasAttribute('listenerOnClick'))
         currCancelEditButton.addEventListener('click',async(e)=>{
             originalContent.textContent = originalText;
@@ -64,7 +65,7 @@ window.addEventListener("load", (event)=>{
     }
     function addEventListenerConfirm(originalEvent,answerId,content){
         console.log("CONFIRM LISTENER FUNCTION")
-        let currConfirmEditButton = document.getElementById(`confirm-edit-${answerId}`)
+        let currConfirmEditButton = document.getElementById(`confirm-edit-answer-${answerId}`)
         if(currConfirmEditButton && !currConfirmEditButton.hasAttribute('listenerOnClick'))
             currConfirmEditButton.addEventListener(`click`, async(e) => {
                 let url = getURL() + '/'
