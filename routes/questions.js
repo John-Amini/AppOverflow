@@ -77,7 +77,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 router.delete('/:id', requireAuth, asyncHandler(async (req, res, next) => {
 
   const question = await Question.findByPk(req.params.id)
-
+  console.log(question);
   if (question && question.user_id === res.locals.user.id) {
     await question.destroy();
   }
