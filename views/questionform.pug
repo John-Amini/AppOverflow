@@ -1,7 +1,10 @@
 extends layout.pug
 include utils.pug
+append head
+    script(src="/javascripts/question-form.js" type="module" defer)
 block content
-    +validationErrorSummary(errors)
+    div.error-styles
+        +validationErrorSummary(errors)
     .q-page-size-adjust
      div.question-form-page-content
         h2.question-header Ask a public question
@@ -9,7 +12,30 @@ block content
             form(action="/questions" method="post").questionForm
                     input(type="hidden" name="_csrf" value=csrfToken)
                     label(for="title" class='q-title') Title
+                    p Be specific and imagine you’re asking a question to another person
                     input(type="text" name="title" class='title-input' value= (body === undefined)? "":body.title)
-                    label(for="content") Details
+                    label(for="content" class='q-details') Details
+                    p Include all the information someone would need to answer your question
                     textarea(type="textarea" name="content").questionTextArea=(body === undefined)? "":body.newAnswerContent
                     button(id="postQuestion") Post Question
+        .helpful-cards
+            div.card-header Step 1: Draft your question
+            .card-info
+                p The community is here to help you with specific coding, algorithm, or language problems.
+                p Avoid asking opinion-based questions.
+                ol
+                    li
+                        button(class='collapsible' type='button')  Summarize the problem
+                            i(class='fa fa-angle-double-down' id='dropdown')
+                        ul.summarize-problem-lists
+                            li Include details about your goal
+                            li Describe expected and actual results
+                            li Include any error messages
+                    li
+                        button(class='collapsible' type='button')  Describe what you'he tried
+                            i(class='fa fa-angle-double-down' id='dropdown')
+                        p Show what you’ve tried and tell us what you found (on this site or elsewhere) and why it didn’t meet your needs. You can get better answers when you provide research.
+                    li
+                        button(class='collapsible' type='button')  Show some code
+                            i(class='fa fa-angle-double-down' id='dropdown')
+                        p When appropriate, share the minimum amount of code others need to reproduce your problem (also called a minimum, reproducible example)
