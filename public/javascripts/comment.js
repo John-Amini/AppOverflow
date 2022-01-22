@@ -25,7 +25,8 @@ window.addEventListener("load", (event)=>{
             let content = document.getElementById(`comment-content-${commentId}`)
             let textContentOriginal = content.textContent;
             addEventListenerCancel(e,commentId,textContentOriginal,content);
-            addEventListenerConfirm(e,commentId,content)
+            addEventListenerConfirm(e,commentId,content);
+            addListenerAttribute(commentId);
             toggleEdits(commentId);
             toggleClassAndEditable(content);
 
@@ -44,7 +45,7 @@ window.addEventListener("load", (event)=>{
                 toggleEdits(commentId);
             })
         }
-        currCancelEditButton.setAttribute('listenerOnClick','true');
+
     }
 
     function addEventListenerConfirm(originalEvent,commentId,content){
@@ -56,12 +57,13 @@ window.addEventListener("load", (event)=>{
                 let questionId = findQuestionId(e)
                 toggleEdits(commentId);
                 toggleClassAndEditable(content);
-                currConfirmEditButton.setAttribute('listenerOnClick', 'true');
+
                 await fetch(`${url}questions/${questionId}/comments/${commentId}`, {
                     method:'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({content:newText})
                 })
+                window.location.href = window.location;
             })
         }
     }
@@ -70,6 +72,12 @@ window.addEventListener("load", (event)=>{
 
 
 
+    function addListenerAttribute(commentId){
+        let currConfirmEditButton = document.getElementById(`confirm-edit-comment-${commentId}`)
+        let currCancelEditButton = document.getElementById(`cancel-edit-comment-${commentId}`)
+        currConfirmEditButton.setAttribute('listenerOnClick', 'true');
+        currCancelEditButton.setAttribute('listenerOnClick', 'true')
+    }
 
 
 
