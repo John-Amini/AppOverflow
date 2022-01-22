@@ -57,13 +57,11 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   const question = await Question.findByPk(id, {
 
     order: [
-      [db.Answer, 'updatedAt', 'DESC']
+      [db.Answer, 'updatedAt', 'DESC'],
+      [db.Answer,{model:db.Comment},'updatedAt','DESC']
     ],
     include: [db.User, {
       model: db.Answer,
-      order: [
-        [db.Comment, 'updatedAt', 'DESC']
-      ],
       include: {
         model: db.Comment,
       }

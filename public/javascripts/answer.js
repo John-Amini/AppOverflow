@@ -21,8 +21,10 @@ window.addEventListener("load", (event)=>{
         let questionId = findQuestionId(e);
         let content = document.getElementById(`answer-content-${answerId}`);
         let textContentOriginal = content.textContent;
+        console.log(textContentOriginal);
         addEventListenerCancel(e,answerId,textContentOriginal,content);
         addEventListenerConfirm(e,answerId,content);
+        addListenerAttribute(answerId);
         toggleClassAndEditable(content);
         toggleEdits(answerId);
         })
@@ -52,17 +54,26 @@ window.addEventListener("load", (event)=>{
         content.classList.toggle("editable")
     }
 
+    function addListenerAttribute(answerId){
+        let currConfirmEditButton = document.getElementById(`confirm-edit-answer-${answerId}`)
+        let currCancelEditButton = document.getElementById(`cancel-edit-answer-${answerId}`)
+        currConfirmEditButton.setAttribute('listenerOnClick', 'true');
+        currCancelEditButton.setAttribute('listenerOnClick', 'true')
+    }
+
     function addEventListenerCancel(originalEvent,answerId,originaltextchange,originalContent){
         let currCancelEditButton = document.getElementById(`cancel-edit-answer-${answerId}`);
         let originalText = originaltextchange;
         if(currCancelEditButton && !currCancelEditButton.hasAttribute('listenerOnClick'))
-        currCancelEditButton.addEventListener('click',async(e)=>{
+            currCancelEditButton.addEventListener('click',async(e)=>{
+            console.log(originalContent);
             originalContent.textContent = originalText;
             toggleClassAndEditable(originalContent);
             toggleEdits(answerId);
         })
-        currCancelEditButton.setAttribute('listenerOnClick','true');
+
     }
+
     function addEventListenerConfirm(originalEvent,answerId,content){
         console.log("CONFIRM LISTENER FUNCTION")
         let currConfirmEditButton = document.getElementById(`confirm-edit-answer-${answerId}`)
@@ -73,12 +84,13 @@ window.addEventListener("load", (event)=>{
                 let questionId = findQuestionId(e)
                 toggleEdits(answerId);
                 toggleClassAndEditable(content)
-                currConfirmEditButton.setAttribute('listenerOnClick', 'true');
                 await fetch(`${url}questions/${questionId}/answers/${answerId}`,{
                     method:'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({content:newText})
                 })
+                window.location.href = window.location;
+
             })
     }
     function getURL(){
