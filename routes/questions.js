@@ -6,7 +6,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 const { requireAuth } = require('../auth');
 const db = require("../db/models");
-const { Question, Answer, Comment } = db;
+const { Question, Answer, Comment, Vote } = db;
 
 const questionValidation = [
   check('title')
@@ -215,6 +215,33 @@ router.put("/:id/comments/:commentId", asyncHandler(async (req,res,next)=>{
   }
   res.send("Edit Valid");
 }))
+
+router.post("/:id/votes", asyncHandler(async(req, res, next) => {
+  // const votesUsers = await Vote.findAll()
+    let answerId = req.body.answerId;
+    let questionId = req.params.id;
+    const currUser = res.locals.user.id;
+    const userVotes = await Vote.findAll({
+      where: {user_id: currUser}
+    })
+    console.log('...' + answerId)
+    const checkBoolean = await Vote.findAll({
+      attributes: ['vote'],
+      where: {user_id: currUser, answer_id: answerId}
+    });
+    console.log('.....' + checkBoolean[0].vote)
+    let userVotedAnswers = []
+    for (let i = 0; i < userVotes.length; i++) {
+      userVotedAnswers.push(userVotes[i].answer_id)
+    }
+    if (userVotedAnswers.includes(answerId)) {
+      if ()
+    } else {
+      const vote = await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
+      res.json({vote})
+    }
+    res.redirect(`/questions/${req.params.id}`);
+}));
 
 async function makeQuery(id) {
   const question = await Question.findByPk(id, {

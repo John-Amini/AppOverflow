@@ -127,11 +127,18 @@ ol li {
     color: rgb(51, 51, 51);
 }
 
+.summarize-problem-lists {
+    display: none;
+}
+
 .collapsible + p {
     font-size: 15px;
     margin: 5px 0 5px 20px;
     font-weight: normal;
     color: rgb(51, 51, 51);
+    display: none;
 }
 
-
+#dropdown {
+    color: #0a95ff;
+}

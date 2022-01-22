@@ -48,6 +48,14 @@ block content
                                 button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn Confirm
                                 button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
+                        .upvote-click
+                            form(action=`/questions/${question.id}/votes` method="post")
+                                input(type="hidden" name="_csrf" value=csrfToken)
+                                input(type='hidden' name='answerId' value= answer.id)
+                                button(name='upvotebtn' type="submit") upvote
+                        .downvote-click
+                            button(name='downvotebtn' type="submit") downvote
+                    if locals.user
                         .answer-add-comment-box
                             form(action=`/questions/${question.id}/comments` method="post")
                                 input(type="hidden" name="_csrf" value=csrfToken)
@@ -76,4 +84,3 @@ block content
                 input(type="hidden" name="_csrf" value=csrfToken)
                 textarea(type="textarea" name="newAnswerContent").create-answer-content.question-answer-textarea=(body === undefined)? "":body.content
                 button(type="submit").edit-btn.post-answer Post Answer
-
