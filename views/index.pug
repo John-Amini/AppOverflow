@@ -15,7 +15,8 @@ block content
       each question in listOfQuestions
             div(id=`question-container-${question.id}`).questionContainer
                 a(href=`/questions/${question.id}`).question-title= question.title
-                span(id=`content-${question.id}`).question-content= question.content
+                div.content-container
+                  span(id=`content-${question.id}`).question-content= question.content
                 if locals.user
                   if locals.user.id === question.user_id
                     div.buttonsContainer
