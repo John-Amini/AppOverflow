@@ -42,10 +42,10 @@ block content
                     if locals.user
                         if locals.user.id === answer.user_id
                             div.buttons-comment-action
-                                button(id=`${answer.id}-delete` data-inline="true" ).delete-btn Delete
-                                button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn Edit
-                                button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn Cancel
-                                button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn Confirm
+                                button(id=`${answer.id}-delete` data-inline="true" ).delete-btn-answer Delete
+                                button(id=`${answer.id}-edit`  data-inline="true" ).edit-btn-answer Edit
+                                button(id=`cancel-edit-${answer.id}` hidden=true).cancel-btn-answer Cancel
+                                button(id=`confirm-edit-${answer.id}` hidden=true).confirm-btn-answer Confirm
                                 button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
                         .answer-add-comment-box
@@ -66,8 +66,8 @@ block content
 
                                                 button(id=`${comment.id}-delete` data-inline='true').delete-btn.delete-btn-comment Delete Comment
                                                 button(id=`${comment.id}-edit` data-inline='true').edit-btn.edit-btn-comment Edit Comment
-                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn.cancel-btn-comment Confirm Edit
-                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn.confirm-btn-comment Cancel Edit
+                                                button(id=`cancel-edit-${comment.id}` hidden=true).cancel-btn-comment Cancel Edit
+                                                button(id=`confirm-edit-${comment.id}` hidden=true).confirm-btn-comment Confirm Edit
     if locals.user
         .questions-add-answer-box
             h2.question-answer-header Have the <span>answer</span>?
@@ -76,4 +76,3 @@ block content
                 input(type="hidden" name="_csrf" value=csrfToken)
                 textarea(type="textarea" name="newAnswerContent").create-answer-content.question-answer-textarea=(body === undefined)? "":body.content
                 button(type="submit").edit-btn.post-answer Post Answer
-
