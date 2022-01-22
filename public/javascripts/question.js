@@ -52,6 +52,7 @@ window.addEventListener("load", (event) => {
         })
 
 
+
     // FIX THIS TO GO ON ALL COMMENTS
 
     const showCommentBtn = document.getElementsByClassName('show-comment-form')[0]

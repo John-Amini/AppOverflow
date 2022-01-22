@@ -80,7 +80,6 @@ router.delete('/:id', requireAuth, asyncHandler(async (req, res, next) => {
 
   const question = await Question.findByPk(req.params.id)
 
-  //need to find out how to delete all associated comments and answers
   if (question && question.user_id === res.locals.user.id) {
     await question.destroy();
   }
@@ -146,6 +145,20 @@ router.delete('/:id/answers/:answerId', asyncHandler(async (req, res, next) => {
     res.redirect('back')
   }
 }))
+
+router.delete('/:id/comments/:commentId', asyncHandler(async (req,res,next)=>{
+  const {id,commentId} = req.params;
+  const comment = await Comment.findByPk(commentId);
+  if(comment && comment.user_id === res.locals.user.id){
+    await comment.destroy();
+    req.method = 'GET'
+    res.redirect(303,`/questions/${id}`)
+  }
+  else{
+    res.errors.push("You cannot delete this")
+    res.redirect('back')
+  }
+}))
 router.put('/:id/answers/:answerId', requireAuth, asyncHandler(async (req, res, next) => {
   const content = req.body.content;
   const id = req.params.id;
@@ -176,8 +189,10 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   }
   else {
     try {
-      const newComment = await Comment.create({ answer_id: answerId, content: newCommentContent, user_id: res.locals.user.id })
+      await Comment.create({ answer_id: answerId, content: newCommentContent, user_id: res.locals.user.id })
       await updateUpdatedAt(question);
+      let answer = findAssociatedAnswer(listOfAnswers,answerId);
+      await updateUpdatedAt(answer);
       return res.redirect(`/questions/${questionId}`)
     } catch (err) {
       req.errors.push("Something went wrong try again");
@@ -185,6 +200,20 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
     }
   }
   res.redirect(`/questions/${req.params.id}`);
+}))
+
+router.put("/:id/comments/:commentId", asyncHandler(async (req,res,next)=>{
+  const content = req.body.content;
+  const id = req.params.id;
+  const commentId = req.params.commentId;
+  const comment = await Comment.findByPk(commentId);
+  if(comment && comment.user_id === res.locals.user.id){
+    comment.content = content;
+    await comment.save();
+  } else{
+    res.send("Invalid Edit");
+  }
+  res.send("Edit Valid");
 }))
 
 async function makeQuery(id) {
@@ -210,5 +239,13 @@ async function updateUpdatedAt(question) {
   await question.update({
     updatedAt: new Date()
   })
+}
+function findAssociatedAnswer (listOfAnswers ,answerId){
+
+  for(const currAnswer of listOfAnswers){
+    if(currAnswer.dataValues.id == answerId){
+      return currAnswer
+    }
+  }
 }
 module.exports = router;

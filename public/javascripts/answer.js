@@ -59,8 +59,6 @@ window.addEventListener("load", (event)=>{
             originalContent.textContent = originalText;
             toggleClassAndEditable(originalContent);
             toggleEdits(answerId);
-            //for some reason it wont toggle again so just reloading page to avoid this
-            //window.location.href = window.location
         })
         currCancelEditButton.setAttribute('listenerOnClick','true');
     }

@@ -9,14 +9,14 @@ append head
 
 block content
 
-    
+
     div(id=`question-container-${question.id}`).question-container
             h1.question-top-section-title= question.title
-            .question-user-info 
+            .question-user-info
                 p.question-user-info-item Posted: #{question.createdAt.toDateString()}
-                p.question-user-info-item Posted By: 
+                p.question-user-info-item Posted By:
                     a(href=`/users/${userPostedQuestion.id}` class='question-user-profile-link') #{userPostedQuestion.username}
-                .question-user-info-item 
+                .question-user-info-item
                     i(class="fas fa-graduation-cap" id="profile-grad-icon")
                     p.question-user-info-content #{question.Answers.length} answers
             if locals.user
@@ -63,10 +63,11 @@ block content
                                     if locals.user
                                         if locals.user.id === comment.user_id
                                             div.buttonsContainer
-                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn Delete Comment
-                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn Edit Comment
-                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn Confirm Edit
-                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn Cancel Edit
+
+                                                button(id=`${comment.id}-delete` data-inline='true').delete-btn.delete-btn-comment Delete Comment
+                                                button(id=`${comment.id}-edit` data-inline='true').edit-btn.edit-btn-comment Edit Comment
+                                                button(id=`cancel-edit-${comment.id}` hidden=true).delete-btn.cancel-btn-comment Confirm Edit
+                                                button(id=`confirm-edit-${comment.id}` hidden=true).delete-btn.confirm-btn-comment Cancel Edit
     if locals.user
         .questions-add-answer-box
             h2.question-answer-header Have the <span>answer</span>?
@@ -75,3 +76,4 @@ block content
                 input(type="hidden" name="_csrf" value=csrfToken)
                 textarea(type="textarea" name="newAnswerContent").create-answer-content.question-answer-textarea=(body === undefined)? "":body.content
                 button(type="submit").edit-btn.post-answer Post Answer
+
