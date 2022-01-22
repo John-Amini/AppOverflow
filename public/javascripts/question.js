@@ -6,9 +6,12 @@ window.addEventListener("load", (event) => {
     let originalContentText = originalContent.textContent;
     if (deleteButton)
         deleteButton.addEventListener("click", async (e) => {
+            console.log("DELETE HITTING")
             e.preventDefault();
             let questionId = findQuestionId(e)
             let url = getURL() + '/';
+            console.log(questionId);
+            console.log(`${url}questions/${questionId}`)
             await fetch(`${url}questions/${questionId}`, {
                 method: 'delete'
             });
@@ -81,10 +84,8 @@ window.addEventListener("load", (event) => {
         editButton.toggleAttribute("hidden");
     }
     function findQuestionId(e) {
-        let containerId = e.path[1].id;
-        let arr = containerId.split("-");
-        let questionId = arr[arr.length - 1];
-        return questionId;
+        var url = window.location.href.split('/');
+        return url[url.length-1]
     }
     function getURL() {
         var url = window.location;
