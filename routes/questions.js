@@ -64,15 +64,17 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
       order: [
         [db.Comment, 'updatedAt', 'DESC']
       ],
-      include: {
+      include: [db.Vote, {
         model: db.Comment,
-      }
+      }]
     }],
 
   });
+
   const listOfAnswers = question.Answers;
   const userPostedQuestion = question.User.dataValues
-  res.render('question', { question, listOfAnswers, userPostedQuestion });
+
+  res.render('question', { question, listOfAnswers, userPostedQuestion});
 }))
 
 
@@ -216,7 +218,8 @@ router.put("/:id/comments/:commentId", asyncHandler(async (req,res,next)=>{
   res.send("Edit Valid");
 }))
 
-router.post("/:id/votes", asyncHandler(async(req, res, next) => {
+
+router.post("/:id/voteup", requireAuth, asyncHandler(async(req, res, next) => {
   // const votesUsers = await Vote.findAll()
     let answerId = req.body.answerId;
     let questionId = req.params.id;
@@ -224,23 +227,59 @@ router.post("/:id/votes", asyncHandler(async(req, res, next) => {
     const userVotes = await Vote.findAll({
       where: {user_id: currUser}
     })
-    console.log('...' + answerId)
     const checkBoolean = await Vote.findAll({
-      attributes: ['vote'],
       where: {user_id: currUser, answer_id: answerId}
     });
-    console.log('.....' + checkBoolean[0].vote)
+
     let userVotedAnswers = []
     for (let i = 0; i < userVotes.length; i++) {
-      userVotedAnswers.push(userVotes[i].answer_id)
+      userVotedAnswers.push(`${userVotes[i].answer_id}`)
     }
+
     if (userVotedAnswers.includes(answerId)) {
-      if ()
+      if (checkBoolean[0].vote === true) {
+        return res.redirect(`/questions/${req.params.id}`);
+      } else {
+        checkBoolean[0].vote = true;
+        await checkBoolean[0].save()
+        return res.redirect(`/questions/${req.params.id}`)
+      }
     } else {
-      const vote = await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
-      res.json({vote})
+      await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
+      return res.redirect(`/questions/${req.params.id}`)
     }
-    res.redirect(`/questions/${req.params.id}`);
+}));
+
+router.post("/:id/votedown", requireAuth, asyncHandler(async(req, res, next) => {
+  // const votesUsers = await Vote.findAll()
+    let answerId = req.body.answerId;
+    let questionId = req.params.id;
+    const currUser = res.locals.user.id;
+    const userVotes = await Vote.findAll({
+      where: {user_id: currUser}
+    })
+    const checkBoolean = await Vote.findAll({
+      where: {user_id: currUser, answer_id: answerId}
+    });
+
+    let userVotedAnswers = []
+    for (let i = 0; i < userVotes.length; i++) {
+      userVotedAnswers.push(`${userVotes[i].answer_id}`)
+    }
+
+    if (userVotedAnswers.includes(answerId)) {
+      if (checkBoolean[0].vote === false) {
+        return res.redirect(`/questions/${req.params.id}`);
+      } else {
+        checkBoolean[0].vote = false;
+
+        await checkBoolean[0].save()
+        return res.redirect(`/questions/${req.params.id}`)
+      }
+    } else {
+      await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
+      return res.redirect(`/questions/${req.params.id}`)
+    }
 }));
 
 async function makeQuery(id) {

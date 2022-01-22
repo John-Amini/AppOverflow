@@ -16,6 +16,11 @@ router.get('/users', asyncHandler(async (req, res) => {
     res.json({ allUsers })
 }))
 
-
+router.get('/votes', asyncHandler(async(req, res) => {
+    const allVotes = await db.Vote.findAll({
+        where: {vote: true}
+    })
+    res.json({allVotes})
+}))
 
 module.exports = router
