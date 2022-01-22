@@ -55,7 +55,6 @@
     color: rgb(10,149,255);
 }
 
-
 .profile-subsection-header{
     font-weight: 550;
     font-size: 1.5em;
@@ -103,6 +102,11 @@
 }
 .profile-subsection-list-date{
     grid-column: 6/7;
+}
+
+.profile-no-question{
+    text-align: center;
+    margin-top: 20px;
 }
 
 .profile-add-questions-box{
