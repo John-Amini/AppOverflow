@@ -87,7 +87,7 @@ h2 {
     outline: 3px solid black;
 }
 
-.edit-btn, .delete-btn, .cancel-btn, .confirm-btn{
+.edit-btn, .delete-btn, .cancel-btn, .confirm-btn, .view-question-page{
     color: rgb(249,252,255);
     border: 1px solid rgb(122,167,199);
     background-color: rgb(10,149,255);
@@ -100,6 +100,7 @@ h2 {
     width: fit-content;
     margin-bottom: 10px;
 }
+
 .edit-btn{
     margin-right: 15px;
 }
@@ -117,4 +118,8 @@ h2 {
 .buttonsContainer{
     display: inline-block;
     position: relative;
+}
+
+.view-question-page{
+    margin: 0 auto 25px;
 }

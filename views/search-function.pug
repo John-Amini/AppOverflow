@@ -13,9 +13,9 @@ block content
   div(id='questionList-Container')
     each question in listOfQuestions
           div(id=`question-container-${question.id}`).questionContainer
-              h2= question.title
-              p= question.content
-              a(href=`/questions/${question.id}`) Question Page
+              h2.question-title= question.title
+              p.question-content= question.content
+              a(href=`/questions/${question.id}`).edit-btn.view-question-page Question Page
               if locals.user
                 if locals.user.id === question.user_id
                       button(id=question.id).delete-btn Delete
