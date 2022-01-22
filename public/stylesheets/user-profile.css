@@ -73,6 +73,8 @@
 
 .profile-subsection-list{
     list-style: none;
+    overflow-y: scroll;
+    max-height: 230px;
 }
 
 .profile-subsection-list-item{
@@ -172,3 +174,4 @@
 #profile-peers-icon{
     color: rgb(255, 215, 0);
 }
+

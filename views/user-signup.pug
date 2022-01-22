@@ -36,6 +36,11 @@ block content
                     .login-form-inputs
                         input(type="submit", value="Sign Up" class="login-button signup-button")
                         p.signup-warning By clicking “Sign up”, you agree to our terms of service, privacy policy and cookie policy
+                form(action="/users/login/demo", method="post" class="demo-user-form") 
+                    input(type="hidden", name="_csrf" value=csrfToken) 
+                    input(type="hidden", name="emailAddress" value="bob@gmail.com") 
+                    input(type="hidden", name="password" value='Password1!') 
+                    input(type="submit", value="Demo User" class="login-button signup-button")
         if err
             .signup-error-container
                 //- .signup-error-box
