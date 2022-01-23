@@ -11,7 +11,7 @@ const asyncHandler = (handler) => {
 router.get('/', asyncHandler(async (req, res, next) => {
   //displays list of questions
   let listOfQuestions = await Question.findAll({
-    raw: true,
+    include: [User, Answer],
     order: [['updatedAt', 'DESC']]
   }
   );

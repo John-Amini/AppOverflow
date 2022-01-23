@@ -14,7 +14,7 @@ html{
 #ask-question{
     position:absolute;
     margin-left: 1000px;
-    margin-top: 20px;
+    margin-top: 40px;
     color: rgb(249,252,255);
     border: 1px solid rgb(122,167,199);
     background-color: rgb(10,149,255);
@@ -26,8 +26,12 @@ html{
     border-radius: 3px;
     width: fit-content
 }
-h2 {
-    font-size: 45px
+
+
+
+#questionButtonContainer h2 {
+    font-size: 45px;
+    margin: 30px auto;
 }
 #questionList-Container{
     display:block;
@@ -182,3 +186,26 @@ h2 {
     overflow-x: scroll;
     overflow-y: scroll;
 }
+
+.question-title-hover:hover{
+    color: rgba(244, 130, 37, 1);
+}
+
+#profile-grad-icon{
+    color: rgba(244, 130, 37, 1);
+}
+
+.question-answers-content{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.question-user-content{
+    display:flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    margin-right: 40px;
+}
+
