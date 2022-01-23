@@ -10,17 +10,16 @@ const router = express.Router()
 router.get('/users', asyncHandler(async (req, res) => {
     const allUsers = await db.User.findAll({
         include: [db.Answer, db.Question],
-        limit: 5
+        limit: 5,
     })
-
     res.json({ allUsers })
 }))
 
-router.get('/votes', asyncHandler(async(req, res) => {
+router.get('/votes', asyncHandler(async (req, res) => {
     const allVotes = await db.Vote.findAll({
-        where: {vote: true}
+        where: { vote: true }
     })
-    res.json({allVotes})
+    res.json({ allVotes })
 }))
 
 module.exports = router
