@@ -58,25 +58,27 @@ window.addEventListener("load", (event) => {
 
     // FIX THIS TO GO ON ALL COMMENTS
 
-    const showCommentBtn = document.getElementsByClassName('show-comment-form')[0]
-    const commentBox = document.getElementsByClassName('answer-add-comment-box')[0]
+    const showCommentBtn = document.getElementsByClassName('show-comment-form')
+    const commentBox = document.getElementsByClassName('answer-add-comment-box')
     let showingComment = false
-    showCommentBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        console.log(showCommentBtn, commentBox)
-        if (showingComment) {
-            // change to invisible
-            showingComment = !showingComment
-            commentBox.style.visibility = 'hidden'
-            showCommentBtn.innerText = 'Post Comment'
-        }
-        else {
-            showingComment = !showingComment
-            commentBox.style.visibility = 'visible'
-            showCommentBtn.innerText = 'Cancel Comment'
-        }
 
-    })
+    for (let i = 0; i < showCommentBtn.length; i++) {
+        showCommentBtn[i].addEventListener('click', (e) => {
+            e.preventDefault()
+            console.log(showCommentBtn[i], commentBox[i])
+            if (showingComment) {
+                // change to invisible
+                showingComment = !showingComment
+                commentBox[i].style.visibility = 'hidden'
+                showCommentBtn[i].innerText = 'Post Comment'
+            }
+            else {
+                showingComment = !showingComment
+                commentBox[i].style.visibility = 'visible'
+                showCommentBtn[i].innerText = 'Cancel Comment'
+            }
+        })
+    }
 
     function toggleEdits() {
         confirmEditButton.toggleAttribute("hidden");
@@ -85,7 +87,7 @@ window.addEventListener("load", (event) => {
     }
     function findQuestionId(e) {
         var url = window.location.href.split('/');
-        return url[url.length-1]
+        return url[url.length - 1]
     }
     function getURL() {
         var url = window.location;
