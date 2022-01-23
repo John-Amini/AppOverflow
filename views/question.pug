@@ -5,7 +5,7 @@ append head
     script(src="/javascripts/question.js" type="module" defer)
     script(src="/javascripts/answer.js" type="module" defer)
     script(src="/javascripts/comment.js" type="module" defer)
-
+    script(src="/javascripts/votes.js" type="module" defer)
 
 block content
 
@@ -47,6 +47,19 @@ block content
                                 button(id=`cancel-edit-answer-${answer.id}` hidden=true).cancel-btn-answer Cancel
                                 button(id=`confirm-edit-answer-${answer.id}` hidden=true).confirm-btn-answer Confirm
                                 button.show-comment-form.edit-btn.post-answer Post a Comment
+                    if locals.user
+                        div(id=`votes-${answer.id}` class='vote-score')
+                            div.vote-card Votes 0
+                        .upvote-click
+                            form(class="vote-up-form" action=`/questions/${question.id}/voteup` method="post")
+                                input(type="hidden" name="_csrf" value=csrfToken)
+                                input(type='hidden' name='answerId' value= answer.id)
+                                button(name='upvotebtn' type="submit" id=`upvote-${answer.id}`) upvote
+                        .downvote-click
+                            form(class="vote-down-form" action=`/questions/${question.id}/votedown` method="post")
+                                input(type="hidden" name="_csrf" value=csrfToken)
+                                input(type='hidden' name='answerId' value= answer.id)
+                                button(name='downvotebtn' type="submit") downvote
                     if locals.user
                         .answer-add-comment-box
                             form(action=`/questions/${question.id}/comments` method="post")
