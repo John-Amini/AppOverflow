@@ -29,7 +29,7 @@ block content
             .question-content
                 span(id='question-content')= question.content
 
-
+    +validationErrorSummary(errors)
     div(id= `answer-List-container`).answerContainer
         .answer-list-header-box
             i(class="fas fa-graduation-cap" id="profile-grad-icon")
@@ -89,7 +89,6 @@ block content
     if locals.user
         .questions-add-answer-box
             h2.question-answer-header Have the <span>answer</span>?
-            +validationErrorSummary(errors)
             form(action=`/questions/${question.id}/answers` method="post" class='question-answer-form')
                 input(type="hidden" name="_csrf" value=csrfToken)
                 textarea(type="textarea" name="newAnswerContent").create-answer-content.question-answer-textarea=(body === undefined)? "":body.content
