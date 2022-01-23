@@ -21,8 +21,10 @@ window.addEventListener("load", (event)=>{
         let questionId = findQuestionId(e);
         let content = document.getElementById(`answer-content-${answerId}`);
         let textContentOriginal = content.textContent;
+        console.log(textContentOriginal);
         addEventListenerCancel(e,answerId,textContentOriginal,content);
         addEventListenerConfirm(e,answerId,content);
+        addListenerAttribute(answerId);
         toggleClassAndEditable(content);
         toggleEdits(answerId);
         })
@@ -42,9 +44,9 @@ window.addEventListener("load", (event)=>{
         return url[url.length-1]
     }
     function toggleEdits(answerId){
-        document.getElementById(`${answerId}-edit`).toggleAttribute("hidden");
-        document.getElementById(`cancel-edit-${answerId}`).toggleAttribute("hidden");
-        document.getElementById(`confirm-edit-${answerId}`).toggleAttribute("hidden");
+        document.getElementById(`${answerId}-edit-answer`).toggleAttribute("hidden");
+        document.getElementById(`cancel-edit-answer-${answerId}`).toggleAttribute("hidden");
+        document.getElementById(`confirm-edit-answer-${answerId}`).toggleAttribute("hidden");
     }
 
     function toggleClassAndEditable(content){
@@ -52,19 +54,29 @@ window.addEventListener("load", (event)=>{
         content.classList.toggle("editable")
     }
 
-    function addEventListenerCancel(originalEvent,answerId,originalText,originalContent){
-        let currCancelEditButton = document.getElementById(`cancel-edit-${answerId}`);
+    function addListenerAttribute(answerId){
+        let currConfirmEditButton = document.getElementById(`confirm-edit-answer-${answerId}`)
+        let currCancelEditButton = document.getElementById(`cancel-edit-answer-${answerId}`)
+        currConfirmEditButton.setAttribute('listenerOnClick', 'true');
+        currCancelEditButton.setAttribute('listenerOnClick', 'true')
+    }
+
+    function addEventListenerCancel(originalEvent,answerId,originaltextchange,originalContent){
+        let currCancelEditButton = document.getElementById(`cancel-edit-answer-${answerId}`);
+        let originalText = originaltextchange;
         if(currCancelEditButton && !currCancelEditButton.hasAttribute('listenerOnClick'))
-        currCancelEditButton.addEventListener('click',async(e)=>{
+            currCancelEditButton.addEventListener('click',async(e)=>{
+            console.log(originalContent);
             originalContent.textContent = originalText;
             toggleClassAndEditable(originalContent);
             toggleEdits(answerId);
         })
-        currCancelEditButton.setAttribute('listenerOnClick','true');
+
     }
+
     function addEventListenerConfirm(originalEvent,answerId,content){
         console.log("CONFIRM LISTENER FUNCTION")
-        let currConfirmEditButton = document.getElementById(`confirm-edit-${answerId}`)
+        let currConfirmEditButton = document.getElementById(`confirm-edit-answer-${answerId}`)
         if(currConfirmEditButton && !currConfirmEditButton.hasAttribute('listenerOnClick'))
             currConfirmEditButton.addEventListener(`click`, async(e) => {
                 let url = getURL() + '/'
@@ -72,12 +84,13 @@ window.addEventListener("load", (event)=>{
                 let questionId = findQuestionId(e)
                 toggleEdits(answerId);
                 toggleClassAndEditable(content)
-                currConfirmEditButton.setAttribute('listenerOnClick', 'true');
                 await fetch(`${url}questions/${questionId}/answers/${answerId}`,{
                     method:'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({content:newText})
                 })
+                window.location.href = window.location;
+
             })
     }
     function getURL(){

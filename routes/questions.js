@@ -57,14 +57,12 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   const question = await Question.findByPk(id, {
 
     order: [
-      [db.Answer, 'updatedAt', 'DESC']
+      [db.Answer, 'updatedAt', 'DESC'],
+      [db.Answer,{model:db.Comment},'updatedAt','DESC']
     ],
     include: [db.User, {
       model: db.Answer,
-      order: [
-        [db.Comment, 'updatedAt', 'DESC']
-      ],
-      include: [db.Vote, {
+      include: {
         model: db.Comment,
       }]
     }],
@@ -81,7 +79,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 router.delete('/:id', requireAuth, asyncHandler(async (req, res, next) => {
 
   const question = await Question.findByPk(req.params.id)
-
+  console.log(question);
   if (question && question.user_id === res.locals.user.id) {
     await question.destroy();
   }
@@ -123,13 +121,13 @@ router.post('/:id/answers', requireAuth, answerValidation, asyncHandler(async (r
     try {
       const newAnswer = await Answer.create({ question_id: req.params.id, content: newAnswerContent, user_id: res.locals.user.id });
       await updateUpdatedAt(question);
-      res.redirect(`/questions/${req.params.id}`);
+      return res.redirect(`/questions/${req.params.id}`);
+
     }
     catch (err) {
       req.errors.push("Something went wrong try again");
       res.render("question", { body: req.body, errors: req.errors });
     }
-    res.redirect(`/questions/${req.params.id}`);
   }
 
 }))
