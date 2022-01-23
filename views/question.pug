@@ -42,24 +42,28 @@ block content
                     if locals.user
                         if locals.user.id === answer.user_id
                             div.buttons-comment-action
-                                button(id=`${answer.id}-delete-answer` data-inline="true" ).delete-btn-answer Delete
-                                button(id=`${answer.id}-edit-answer`  data-inline="true" ).edit-btn-answer Edit
+                                button(id=`${answer.id}-delete-answer` data-inline="true" ).delete-btn-answer Delete Answer
+                                button(id=`${answer.id}-edit-answer`  data-inline="true" ).edit-btn-answer Edit Answer
                                 button(id=`cancel-edit-answer-${answer.id}` hidden=true).cancel-btn-answer Cancel
                                 button(id=`confirm-edit-answer-${answer.id}` hidden=true).confirm-btn-answer Confirm
-                        button.show-comment-form.edit-btn.post-answer Post a Comment
+                        .post-comment-btn-parent
+                            button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
-                        div(id=`votes-${answer.id}` class='vote-score')
-                            div.vote-card Votes 0
+                      div.votes-container
                         .upvote-click
                             form(class="vote-up-form" action=`/questions/${question.id}/voteup` method="post")
                                 input(type="hidden" name="_csrf" value=csrfToken)
                                 input(type='hidden' name='answerId' value= answer.id)
-                                button(name='upvotebtn' type="submit" id=`upvote-${answer.id}`) upvote
+                                button(name='upvotebtn' type="submit" id=`upvote-${answer.id}` class='vote-up-btn-style')
+                                    i(class='fa fa-caret-up')
+                        div(id=`votes-${answer.id}` class='vote-score')
+                            div.vote-card 0
                         .downvote-click
                             form(class="vote-down-form" action=`/questions/${question.id}/votedown` method="post")
                                 input(type="hidden" name="_csrf" value=csrfToken)
                                 input(type='hidden' name='answerId' value= answer.id)
-                                button(name='downvotebtn' type="submit") downvote
+                                button(name='downvotebtn' type="submit" class='vote-down-btn-style')
+                                     i(class='fa fa-caret-down')
                     if locals.user
                         .answer-add-comment-box
                             form(action=`/questions/${question.id}/comments` method="post")
