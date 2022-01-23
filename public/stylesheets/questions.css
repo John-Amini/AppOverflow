@@ -297,3 +297,15 @@
     display: flex;
     justify-content: center;
 }
+
+.errorContainer{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    color: red;
+}
+
+.error-list{
+    list-style: none;
+
+}

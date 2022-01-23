@@ -142,3 +142,15 @@ ol li {
 #dropdown {
     color: #0a95ff;
 }
+
+.errorContainer{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    color: red;
+}
+
+.error-list{
+    list-style: none;
+
+}
