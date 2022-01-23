@@ -69,12 +69,14 @@ window.addEventListener("load", (event) => {
             if (showingComment) {
                 // change to invisible
                 showingComment = !showingComment
-                commentBox[i].style.visibility = 'hidden'
+                // commentBox[i].style.visibility = 'hidden'
+                commentBox[i].style.display = 'none'
                 showCommentBtn[i].innerText = 'Post Comment'
             }
             else {
                 showingComment = !showingComment
-                commentBox[i].style.visibility = 'visible'
+                // commentBox[i].style.visibility = 'visible'
+                commentBox[i].style.display = 'flex'
                 showCommentBtn[i].innerText = 'Cancel Comment'
             }
         })

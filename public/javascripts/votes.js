@@ -2,9 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fetchAllVotes = await fetch(`${window.location.origin}/api/votes`, {
         method: 'GET'
     })
-    const res = await fetchAllVotes.json()
-    // console.log(res.allVotes)
-    console.log(res)
+    const res = await fetchAllVotes.json();
+
     let votesAnsId = [];
     for(let i = 0; i < res.allVotes.length; i++) {
         votesAnsId.push(`${res.allVotes[i].answer_id}`)
@@ -24,9 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let uniqueAnsArray = [...new Set(votesAnsId)]
     // console.log(votesAnsId)
     const voteClass = document.getElementsByClassName('vote-score');
-    const answerId = voteClass[0].id.split('-')[1]
 
-    console.log(uniqueAnsArray)
     for (let i = 0; i < uniqueAnsArray.length; i++) {
         const storeVotes = document.getElementById(`votes-${uniqueAnsArray[i]}`)
         if (storeVotes) {
