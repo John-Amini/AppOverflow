@@ -174,3 +174,11 @@ h2 {
     max-width: 1000px;
     margin: 0 auto;
 }
+
+.editable {
+    min-width: 500px;
+    outline: 1px solid black;
+    border-radius: 3px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
