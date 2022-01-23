@@ -54,8 +54,10 @@ router.post('/', requireAuth, questionValidation, asyncHandler(async (req, res, 
 }))
 router.get('/:id', asyncHandler(async (req, res, next) => {
   let id = req.params.id;
+  let errors;
+  if(req.query.valid)
+    errors = JSON.parse(decodeURIComponent(req.query.valid));
   const question = await Question.findByPk(id, {
-
     order: [
       [db.Answer, 'updatedAt', 'DESC'],
       [db.Answer,{model:db.Comment},'updatedAt','DESC']
@@ -70,7 +72,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   });
   const listOfAnswers = question.Answers;
   const userPostedQuestion = question.User.dataValues
-  res.render('question', { question, listOfAnswers, userPostedQuestion });
+  res.render('question', { question, listOfAnswers, userPostedQuestion , errors });
 }))
 
 
@@ -130,8 +132,9 @@ router.post('/:id/answers', requireAuth, answerValidation, asyncHandler(async (r
     req.errors = validatorErrors.array().map((error) => error.msg);
     if (req.errors[0] === "Invalid value") req.errors.shift();
     res.method = 'GET'
-    res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
-    //return res.redirect(`/questions/${req.params.id}`);
+    var string = encodeURIComponent(JSON.stringify(req.errors))
+    //res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
+    return res.redirect(`/questions/${req.params.id}?valid=` + string);
   }
   else {
     try {
@@ -216,8 +219,10 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   if (newCommentContent === "") {
     req.errors = validatorErrors.array().map((error) => error.msg);
     if (req.errors[0] === "Invalid value") req.errors.shift();
+    var string = encodeURIComponent(JSON.stringify(req.errors))
     res.method = 'GET'
-    res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
+    //res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
+    return res.redirect(`/questions/${req.params.id}?valid=` + string);
   }
   else {
     try {
@@ -239,13 +244,16 @@ router.put("/:id/comments/:commentId", asyncHandler(async (req,res,next)=>{
   const id = req.params.id;
   const commentId = req.params.commentId;
   const comment = await Comment.findByPk(commentId);
+  console.log("asdlkjhfbdsajkhfbdsajhlkfbajhbfkjhbfkjhbfdaskjhfabjkhbfjkhdbajskfhdbfkjh")
   if(comment && comment.user_id === res.locals.user.id){
     comment.content = content;
     await comment.save();
+
   } else{
     res.send("Invalid Edit");
   }
-  res.send("Edit Valid");
+  res.send("response");
+  // res.redirect(`/questions/${req.params.id}`);
 }))
 
 router.post("/:id/voteup", requireAuth, asyncHandler(async(req, res, next) => {

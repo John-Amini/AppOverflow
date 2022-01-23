@@ -56,14 +56,15 @@ window.addEventListener("load", (event)=>{
                 let newText = content.textContent;
                 let questionId = findQuestionId(e)
                 toggleEdits(commentId);
+                console.log("lkdjfbnaslkjfnhslkjfnblk")
                 toggleClassAndEditable(content);
-
+                console.log(`${url}questions/${questionId}`);
                 await fetch(`${url}questions/${questionId}/comments/${commentId}`, {
                     method:'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({content:newText})
                 })
-                window.location.href = window.location;
+                window.location.href = `${url}questions/${questionId}`
             })
         }
     }
@@ -90,12 +91,14 @@ window.addEventListener("load", (event)=>{
                 questionId = curr;
             }
         }
-        console.log(questionId)
         return questionId;
     }
 
     function findQuestionId(e){
-        var url = window.location.href.split('/');
+        let url = window.location.href.split('?');
+        url = url[0].split('/')
+        console.log(url[url.length-1])
+
         return url[url.length-1]
     }
 
