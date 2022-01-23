@@ -54,8 +54,10 @@ router.post('/', requireAuth, questionValidation, asyncHandler(async (req, res, 
 }))
 router.get('/:id', asyncHandler(async (req, res, next) => {
   let id = req.params.id;
+  let errors;
+  if(req.query.valid)
+    errors = JSON.parse(decodeURIComponent(req.query.valid));
   const question = await Question.findByPk(id, {
-
     order: [
       [db.Answer, 'updatedAt', 'DESC'],
       [db.Answer, { model: db.Comment }, 'updatedAt', 'DESC']
@@ -70,8 +72,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   });
   const listOfAnswers = question.Answers;
   const userPostedQuestion = question.User.dataValues
-  console.log(question.User.dataValues)
-  res.render('question', { question, listOfAnswers, userPostedQuestion });
+  res.render('question', { question, listOfAnswers, userPostedQuestion , errors });
 }))
 
 
@@ -105,8 +106,25 @@ router.put('/:id', requireAuth, asyncHandler(async (req, res, next) => {
 
 router.post('/:id/answers', requireAuth, answerValidation, asyncHandler(async (req, res, next) => {
   let newAnswerContent = req.body.newAnswerContent
-  let question = await Question.findByPk(req.params.id)
+  const question = await Question.findByPk(req.params.id, {
+
+    order: [
+      [db.Answer, 'updatedAt', 'DESC'],
+      [db.Answer,{model:db.Comment},'updatedAt','DESC']
+    ],
+    include: [db.User, {
+      model: db.Answer,
+      include: {
+        model: db.Comment,
+      }
+    }],
+
+  });
+  const userPostedQuestion = question.User.dataValues
   let listOfAnswers = await Answer.findAll({ where: { question_id: req.params.id } })
+
+
+
   const validatorErrors = validationResult(req);
   req.errors = []
   const body = req.body;
@@ -114,7 +132,9 @@ router.post('/:id/answers', requireAuth, answerValidation, asyncHandler(async (r
     req.errors = validatorErrors.array().map((error) => error.msg);
     if (req.errors[0] === "Invalid value") req.errors.shift();
     res.method = 'GET'
-    res.render("question", { body, question, errors: req.errors, listOfAnswers })
+    var string = encodeURIComponent(JSON.stringify(req.errors))
+    //res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
+    return res.redirect(`/questions/${req.params.id}?valid=` + string);
   }
   else {
     try {
@@ -175,7 +195,23 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   let newCommentContent = req.body.newCommentContent;
   let answerId = req.body.answerId;
   let questionId = req.params.id;
-  let question = await makeQuery(questionId);
+
+  const question = await Question.findByPk(req.params.id, {
+
+    order: [
+      [db.Answer, 'updatedAt', 'DESC'],
+      [db.Answer,{model:db.Comment},'updatedAt','DESC']
+    ],
+    include: [db.User, {
+      model: db.Answer,
+      include: {
+        model: db.Comment,
+      }
+    }],
+
+  });
+  const userPostedQuestion = question.User.dataValues
+
   let listOfAnswers = question.Answers
   const validatorErrors = validationResult(req);
   req.errors = []
@@ -183,8 +219,10 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   if (newCommentContent === "") {
     req.errors = validatorErrors.array().map((error) => error.msg);
     if (req.errors[0] === "Invalid value") req.errors.shift();
+    var string = encodeURIComponent(JSON.stringify(req.errors))
     res.method = 'GET'
-    res.render("question", { body, question, errors: req.errors, listOfAnswers })
+    //res.render("question", { body, question, errors: req.errors, listOfAnswers,userPostedQuestion })
+    return res.redirect(`/questions/${req.params.id}?valid=` + string);
   }
   else {
     try {
@@ -212,7 +250,8 @@ router.put("/:id/comments/:commentId", asyncHandler(async (req, res, next) => {
   } else {
     res.send("Invalid Edit");
   }
-  res.send("Edit Valid");
+  res.send("response");
+  // res.redirect(`/questions/${req.params.id}`);
 }))
 
 router.post("/:id/voteup", requireAuth, asyncHandler(async (req, res, next) => {

@@ -40,7 +40,8 @@ window.addEventListener("load", (event)=>{
         return answerId;
     }
     function findQuestionId(e){
-        var url = window.location.href.split('/');
+        let url = window.location.href.split('?');
+        url = url[0].split('/')
         return url[url.length-1]
     }
     function toggleEdits(answerId){
@@ -89,7 +90,7 @@ window.addEventListener("load", (event)=>{
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({content:newText})
                 })
-                window.location.href = window.location;
+                window.location.href = `${url}questions/${questionId}`
 
             })
     }
