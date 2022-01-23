@@ -6,7 +6,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 const { requireAuth } = require('../auth');
 const db = require("../db/models");
-const { Question, Answer, Comment,Vote } = db;
+const { Question, Answer, Comment, Vote } = db;
 
 const questionValidation = [
   check('title')
@@ -58,7 +58,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
 
     order: [
       [db.Answer, 'updatedAt', 'DESC'],
-      [db.Answer,{model:db.Comment},'updatedAt','DESC']
+      [db.Answer, { model: db.Comment }, 'updatedAt', 'DESC']
     ],
     include: [db.User, {
       model: db.Answer,
@@ -70,6 +70,7 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
   });
   const listOfAnswers = question.Answers;
   const userPostedQuestion = question.User.dataValues
+  console.log(question.User.dataValues)
   res.render('question', { question, listOfAnswers, userPostedQuestion });
 }))
 
@@ -144,15 +145,15 @@ router.delete('/:id/answers/:answerId', asyncHandler(async (req, res, next) => {
   }
 }))
 
-router.delete('/:id/comments/:commentId', asyncHandler(async (req,res,next)=>{
-  const {id,commentId} = req.params;
+router.delete('/:id/comments/:commentId', asyncHandler(async (req, res, next) => {
+  const { id, commentId } = req.params;
   const comment = await Comment.findByPk(commentId);
-  if(comment && comment.user_id === res.locals.user.id){
+  if (comment && comment.user_id === res.locals.user.id) {
     await comment.destroy();
     req.method = 'GET'
-    res.redirect(303,`/questions/${id}`)
+    res.redirect(303, `/questions/${id}`)
   }
-  else{
+  else {
     res.errors.push("You cannot delete this")
     res.redirect('back')
   }
@@ -189,7 +190,7 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
     try {
       await Comment.create({ answer_id: answerId, content: newCommentContent, user_id: res.locals.user.id })
       await updateUpdatedAt(question);
-      let answer = findAssociatedAnswer(listOfAnswers,answerId);
+      let answer = findAssociatedAnswer(listOfAnswers, answerId);
       await updateUpdatedAt(answer);
       return res.redirect(`/questions/${questionId}`)
     } catch (err) {
@@ -200,81 +201,81 @@ router.post('/:id/comments', requireAuth, commentValidation, asyncHandler(async 
   res.redirect(`/questions/${req.params.id}`);
 }))
 
-router.put("/:id/comments/:commentId", asyncHandler(async (req,res,next)=>{
+router.put("/:id/comments/:commentId", asyncHandler(async (req, res, next) => {
   const content = req.body.content;
   const id = req.params.id;
   const commentId = req.params.commentId;
   const comment = await Comment.findByPk(commentId);
-  if(comment && comment.user_id === res.locals.user.id){
+  if (comment && comment.user_id === res.locals.user.id) {
     comment.content = content;
     await comment.save();
-  } else{
+  } else {
     res.send("Invalid Edit");
   }
   res.send("Edit Valid");
 }))
 
-router.post("/:id/voteup", requireAuth, asyncHandler(async(req, res, next) => {
+router.post("/:id/voteup", requireAuth, asyncHandler(async (req, res, next) => {
   // const votesUsers = await Vote.findAll()
-    let answerId = req.body.answerId;
-    let questionId = req.params.id;
-    const currUser = res.locals.user.id;
-    const userVotes = await Vote.findAll({
-      where: {user_id: currUser}
-    })
-    const checkBoolean = await Vote.findAll({
-      where: {user_id: currUser, answer_id: answerId}
-    });
+  let answerId = req.body.answerId;
+  let questionId = req.params.id;
+  const currUser = res.locals.user.id;
+  const userVotes = await Vote.findAll({
+    where: { user_id: currUser }
+  })
+  const checkBoolean = await Vote.findAll({
+    where: { user_id: currUser, answer_id: answerId }
+  });
 
-    let userVotedAnswers = []
-    for (let i = 0; i < userVotes.length; i++) {
-      userVotedAnswers.push(`${userVotes[i].answer_id}`)
-    }
+  let userVotedAnswers = []
+  for (let i = 0; i < userVotes.length; i++) {
+    userVotedAnswers.push(`${userVotes[i].answer_id}`)
+  }
 
-    if (userVotedAnswers.includes(answerId)) {
-      if (checkBoolean[0].vote === true) {
-        return res.redirect(`/questions/${req.params.id}`);
-      } else {
-        checkBoolean[0].vote = true;
-        await checkBoolean[0].save()
-        return res.redirect(`/questions/${req.params.id}`)
-      }
+  if (userVotedAnswers.includes(answerId)) {
+    if (checkBoolean[0].vote === true) {
+      return res.redirect(`/questions/${req.params.id}`);
     } else {
-      await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
+      checkBoolean[0].vote = true;
+      await checkBoolean[0].save()
       return res.redirect(`/questions/${req.params.id}`)
     }
+  } else {
+    await Vote.create({ answer_id: answerId, user_id: res.locals.user.id, vote: true })
+    return res.redirect(`/questions/${req.params.id}`)
+  }
 }));
 
-router.post("/:id/votedown", requireAuth, asyncHandler(async(req, res, next) => {
+router.post("/:id/votedown", requireAuth, asyncHandler(async (req, res, next) => {
   // const votesUsers = await Vote.findAll()
-    let answerId = req.body.answerId;
-    let questionId = req.params.id;
-    const currUser = res.locals.user.id;
-    const userVotes = await Vote.findAll({
-      where: {user_id: currUser}
-    })
-    const checkBoolean = await Vote.findAll({
-      where: {user_id: currUser, answer_id: answerId}
-    });
+  let answerId = req.body.answerId;
+  let questionId = req.params.id;
+  const currUser = res.locals.user.id;
+  const userVotes = await Vote.findAll({
+    where: { user_id: currUser }
+  })
+  const checkBoolean = await Vote.findAll({
+    where: { user_id: currUser, answer_id: answerId }
+  });
 
-    let userVotedAnswers = []
-    for (let i = 0; i < userVotes.length; i++) {
-      userVotedAnswers.push(`${userVotes[i].answer_id}`)
-    }
+  let userVotedAnswers = []
+  for (let i = 0; i < userVotes.length; i++) {
+    userVotedAnswers.push(`${userVotes[i].answer_id}`)
+  }
 
-    if (userVotedAnswers.includes(answerId)) {
-      if (checkBoolean[0].vote === false) {
-        return res.redirect(`/questions/${req.params.id}`);
-      } else {
-        checkBoolean[0].vote = false;
-
-        await checkBoolean[0].save()
-        return res.redirect(`/questions/${req.params.id}`)
-      }
+  if (userVotedAnswers.includes(answerId)) {
+    if (checkBoolean[0].vote === false) {
+      return res.redirect(`/questions/${req.params.id}`);
     } else {
-      await Vote.create({answer_id: answerId, user_id: res.locals.user.id, vote: true})
+      checkBoolean[0].vote = false;
+
+      await checkBoolean[0].save()
       return res.redirect(`/questions/${req.params.id}`)
     }
+  } else {
+    await Vote.create({ answer_id: answerId, user_id: res.locals.user.id, vote: true })
+    return res.redirect(`/questions/${req.params.id}`)
+  }
 }));
 
 async function makeQuery(id) {
@@ -301,10 +302,10 @@ async function updateUpdatedAt(question) {
     updatedAt: new Date()
   })
 }
-function findAssociatedAnswer (listOfAnswers ,answerId){
+function findAssociatedAnswer(listOfAnswers, answerId) {
 
-  for(const currAnswer of listOfAnswers){
-    if(currAnswer.dataValues.id == answerId){
+  for (const currAnswer of listOfAnswers) {
+    if (currAnswer.dataValues.id == answerId) {
       return currAnswer
     }
   }
