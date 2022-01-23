@@ -6,7 +6,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const { check, validationResult } = require('express-validator');
 const { requireAuth } = require('../auth');
 const db = require("../db/models");
-const { Question, Answer, Comment } = db;
+const { Question, Answer, Comment,Vote } = db;
 
 const questionValidation = [
   check('title')

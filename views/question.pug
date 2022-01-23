@@ -46,7 +46,7 @@ block content
                                 button(id=`${answer.id}-edit-answer`  data-inline="true" ).edit-btn-answer Edit
                                 button(id=`cancel-edit-answer-${answer.id}` hidden=true).cancel-btn-answer Cancel
                                 button(id=`confirm-edit-answer-${answer.id}` hidden=true).confirm-btn-answer Confirm
-                                button.show-comment-form.edit-btn.post-answer Post a Comment
+                        button.show-comment-form.edit-btn.post-answer Post a Comment
                     if locals.user
                         div(id=`votes-${answer.id}` class='vote-score')
                             div.vote-card Votes 0
