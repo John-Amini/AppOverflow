@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const storeVotes = document.getElementById(`votes-${uniqueAnsArray[i]}`)
         if (storeVotes) {
             // console.log('test')
-            storeVotes.innerHTML = `Votes ${map1.get(uniqueAnsArray[i])}`
+            storeVotes.innerHTML = `${map1.get(uniqueAnsArray[i])}`
         }
     }
 })
