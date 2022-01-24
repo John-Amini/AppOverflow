@@ -32,9 +32,6 @@ router.post('/search', asyncHandler(async (req, res, next) => {
     order: [['updatedAt', 'DESC']],
   })
 
-  console.log("**********************************")
-  console.log(listOfQuestions[0].Answers[0].dataValues.Votes.length)
-  console.log("**********************************")
   res.render('search-function', { listOfQuestions })
 }))
 
