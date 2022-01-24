@@ -8,6 +8,9 @@ append head
 
 block content
   h1 Search Results
+  if !listOfQuestions.length
+    div.no-results
+      h2.no-results No questions matched your desired search. Try asking a question.
   div(id='questionButtonContainer')
     a(href="/questions").edit-btn.search-ask-question-button Ask Question
   div(id='questionList-Container')
@@ -20,7 +23,7 @@ block content
                 a(href=`/questions/${question.id}`).edit-btn.view-question-page Question Page
                 .search-answers-content
                   i(class="fas fa-graduation-cap" id="profile-header-grad-icon")
-                  p #{question.Answers.length}            
+                  p #{question.Answers.length}
               if locals.user
                 if locals.user.id === question.user_id
                       button(id=question.id).delete-btn Delete
