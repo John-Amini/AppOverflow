@@ -48,6 +48,11 @@ block content
                                 button(id=`confirm-edit-answer-${answer.id}` hidden=true).confirm-btn-answer Confirm
                         .post-comment-btn-parent
                             button.show-comment-form.edit-btn.post-answer Post a Comment
+                    if !locals.user
+                        div.non-login-votes
+                            p Votes
+                            div(id=`votes-${answer.id}` class='vote-score')
+                                div.vote-card 0
                     if locals.user
                       div.votes-container
                         .upvote-click
